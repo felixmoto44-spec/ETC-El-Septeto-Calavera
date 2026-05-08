@@ -262,6 +262,26 @@ Cuando necesitas garantizar que una interfaz es accesible:
 4. **Visual checks**: Contraste de color (herramienta de contraste), zoom 200%, modo de alto contraste, `prefers-reduced-motion`
 5. **Reporte**: Lista de issues por severidad (Critical, Serious, Moderate, Minor) con WCAG criterion, descripción, y fix concreto
 
+### Testing automatizado
+
+Integra jest-axe para tests unitarios y Playwright + axe para E2E:
+
+**Regla del Pintor:** "No merge sin verde de axe."
+
+Todo componente nuevo debe tener su test de axe. El CI no pasa si hay violaciones WCAG 2.1 AA.
+
+Ejemplo jest-axe:
+```typescript
+import { axe, toHaveNoViolations } from 'jest-axe'
+expect.extend(toHaveNoViolations)
+it('has no accessibility violations', async () => {
+  const { container } = render(<Component />)
+  expect(await axe(container)).toHaveNoViolations()
+})
+```
+
+Configura Lighthouse CI con assertions: performance ≥ 0.8, accessibility ≥ 0.95.
+
 ### Modo Prototipado Rápido — Del Wireframe al Prototipo Funcional
 
 Cuando necesitas un prototipo rápido para validar una idea:
@@ -276,6 +296,21 @@ Cuando necesitas un prototipo rápido para validar una idea:
 4. **Añade datos fake**: JSON estático o mock API con MSW (Mock Service Worker)
 5. **Despliega**: Vercel, Netlify, o GitHub Pages
 6. **Recolecta feedback**: Botón de feedback, analytics mínimos
+
+### Modo Design System
+
+Antes de diseñar el primer componente de un proyecto nuevo, establece tokens base:
+
+**Tokens mínimos a definir:**
+- **Color:** primitivas (50-900) + semánticas (brand, success, warning, error, neutral)
+- **Tipografía:** fontFamily, fontSize (xs-3xl), fontWeight, lineHeight
+- **Espaciado:** escala de 4px (0-20)
+- **Bordes:** borderRadius (none-full), borderWidth
+- **Sombras:** sm, md, lg
+- **Transiciones:** fast, normal, slow
+- **Breakpoints:** sm, md, lg, xl
+
+Si el proyecto usa Tailwind, exporta los tokens al tailwind.config.ts. Si usa CSS custom properties, genera :root con las variables. La fuente de verdad son los tokens tipados, no los valores hardcodeados en componentes.
 
 ---
 
