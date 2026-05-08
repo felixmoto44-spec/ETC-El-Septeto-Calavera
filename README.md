@@ -37,13 +37,15 @@ Moderador de dominio que ve lo que otros pasan por alto: términos ambiguos, con
 
 El cuarto calavera, especialista en todo lo operacional: pipelines de CI/CD, contenedores Docker, Infraestructura como Código, gestión de secretos, auditoría de dependencias, respuesta a incidentes, worktrees de git y seguridad operacional. Sin él, el código no llega a producción.
 
+Incluye un **Modo Integración de APIs** para configurar servicios externos (Supabase, Stripe, Google OAuth, GitHub OAuth, AWS) con un flujo de 6 fases: diagnóstico, investigar, planear, ejecutar, verificar, y notificar al Maestro.
+
 **Origen**: Diseñado desde cero para ETC, inspirado en [alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills) y [mattpocock/skills](https://github.com/mattpocock/skills).
 
 ---
 
 ## 🤝 Colaboración entre Agentes
 
-Los 4 agentes de ETC no trabajan en aislamiento — se invocan entre sí automáticamente según el contexto. Hay **20 hooks de colaboración** (C1–C20) documentados en sus instrucciones, y cada agente integra internamente la lógica de sus especialidades.
+Los 4 agentes de ETC no trabajan en aislamiento — se invocan entre sí automáticamente según el contexto. Hay **23 hooks de colaboración** (C1–C23) documentados en sus instrucciones, y cada agente integra internamente la lógica de sus especialidades.
 
 > _«El Maestro implementa, Bug Doctor diagnostica, El de las Gafas clarifica, Las Manos despliega. El que calla una duda al compañero, la paga con un bug.»_
 
@@ -58,7 +60,7 @@ Cada agente tiene un rol primario claro, y cuando detecta que está fuera de su 
 | 🤓 **El de las Gafas** | Clarificar ubiquitous language y documentación | 🧪 Maestro (blindar con tests), 🩺 Bug Doctor (bugs por ambigüedad), 🖐️ Manos (infra/secretos) |
 | 🖐️ **Las Manos** | Infraestructura, CI/CD, secretos, dependencias, incidentes, worktrees, auditoría de skills | 🧪 Maestro (deploy feature), 🩺 Bug Doctor (incidentes), 🤓 Gafas (ADR operacionales) |
 
-### Las 20 colaboraciones (C1–C20)
+### Las 23 colaboraciones (C1–C23)
 
 #### Hooks C1–C14: El Trío Original (Maestro ↔ Bug Doctor ↔ Gafas)
 
@@ -90,6 +92,14 @@ Cada agente tiene un rol primario claro, y cuando detecta que está fuera de su 
 | C19 | 🤓 Gafas | ADR necesita restricciones de infra | 🖐️ Manos | Contexto operacional para el ADR |
 | C20 | 🤓 Gafas | Secretos en documentación de dominio | 🖐️ Manos | Limpieza + prevención de leaks |
 
+#### Hooks C21–C23: Gafas profundiza la arquitectura
+
+| # | Inicia | Gatillo | Invoca a | Resultado |
+|---|--------|---------|----------|-----------|
+| C21 | 🤓 Gafas | Subdominio Core sin tests ni inversión | 🧪 Maestro | Ciclo de deepening con TDD |
+| C22 | 🤓 Gafas | Módulo shallow con bugs frecuentes | 🩺 Bug Doctor | Diagnóstico en paralelo |
+| C23 | 🤓 Gafas | Nuevo bounded context descubierto | 🧪 Maestro | Mapa de contextos actualizado |
+
 ### Lógica especializada absorbida
 
 Cada agente principal integra la lógica de sus especialidades sin necesidad de sub-agentes:
@@ -99,7 +109,7 @@ Cada agente principal integra la lógica de sus especialidades sin necesidad de 
 | 🤓 **El de las Gafas** | ddd-strategic-design (subdominios), ddd-context-mapping (patrones bounded context), improve-codebase-architecture (deepening) |
 | 🖐️ **Las Manos** | senior-devops (CI/CD, Docker, IaC), dependency-auditor (CVEs, licencias), env-secrets-manager (.env, leaks), incident-commander (SEV-0→3), git-worktree-manager, skill-security-auditor, git-guardrails, setup-pre-commit |
 
-### Ciclos compuestos — cuando las 20 colaboraciones se encadenan
+### Ciclos compuestos — cuando las 23 colaboraciones se encadenan
 
 #### 🐛🔍 "Bug revela deuda de dominio" (C7→C11→C10→C14)
 
@@ -146,6 +156,26 @@ Las Manos activa sus modos: Incidentes (SEV-1) → Secretos (rotación) → Guar
   ↓
 Manos → Bug Doctor ("incidente mitigado, post-mortem documentado")
 ```
+
+### 🚨 Delegación obligatoria
+
+Cada agente tiene reglas duras de delegación — no sugerencias, sino checkpoints obligatorios:
+
+| Agente | Regla | Disparador |
+|--------|-------|------------|
+| 🧪 Maestro | → Gafas | Risk ≥ 60 en INIT |
+| 🧪 Maestro | → Bug Doctor | ≥ 3 hipótesis en diagnóstico |
+| 🧪 Maestro | → Manos | Entorno de testing no verificado |
+| 🩺 Bug Doctor | → Maestro | Fix identificado (Fase 5) |
+| 🩺 Bug Doctor | → Gafas | Hipótesis toca dominio |
+| 🩺 Bug Doctor | → Manos | Falta tooling de diagnóstico |
+| 🤓 Gafas | → Bug Doctor | Código ≠ docs |
+| 🤓 Gafas | → Maestro | Término clarificado / ADR creado |
+| 🦾 Manos | → Maestro | Entorno listo |
+| 🦾 Manos | → Bug Doctor | Fallo de sistema/runtime |
+| 🦾 Manos | → Gafas | Tooling afecta al equipo |
+
+Y documenta el nuevo Modo Integración de APIs en la sección de Las Manos.
 
 ---
 
