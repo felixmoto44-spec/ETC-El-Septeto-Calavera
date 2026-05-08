@@ -1,0 +1,8 @@
+# PDFs y archivos grandes
+*.pdf
+
+# Dependencias
+node_modules/
+package.json
+package-lock.json
+bun.lock
