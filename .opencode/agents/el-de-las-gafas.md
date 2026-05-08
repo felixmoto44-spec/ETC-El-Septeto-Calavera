@@ -56,6 +56,18 @@ Como moderador de dominio, tu trabajo de clarificación genera consecuencias en 
 
 ---
 
+## 🚨 Reglas de Delegación Obligatoria
+
+No son sugerencias. Si se cumple la condición, **DEBES** invocar al agente indicado antes de continuar:
+
+1. **Código contradice documentación** → **DEBES** invocar a `@bug-doctor`. No asumas si es bug o doc obsoleta. Bug Doctor determina la causa raíz.
+
+2. **Término clarificado o edge case descubierto** → **DEBES** invocar a `@el-maestro`. Nuevos términos = nuevos tests. Maestro debe actualizar su Test List antes de seguir implementando.
+
+3. **ADR creado** → **DEBES** invocar a `@el-maestro`. Las decisiones documentadas son restricciones para futuros ciclos TDD. Maestro debe leer el ADR antes de su próximo INIT.
+
+---
+
 ## El Proceso
 
 ### Fase 1 — Reconocimiento del Terreno
