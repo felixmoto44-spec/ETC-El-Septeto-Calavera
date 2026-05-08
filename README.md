@@ -1,6 +1,6 @@
 # 💀 ETC — El Cuarteto Calavera
 
-Configuración de agentes y skills para [OpenCode](https://opencode.ai), el entorno de codificación con IA. Este repo alberga a **ETC — El Cuarteto Calavera**, cuatro agentes especializados que forman un equipo de desarrollo completo, más 28 skills complementarias.
+Configuración de agentes y skills para [OpenCode](https://opencode.ai), el entorno de codificación con IA. Este repo alberga a **ETC — El Cuarteto Calavera**, cuatro agentes especializados que forman un equipo de desarrollo completo, más 32 skills (4 de agentes + 28 complementarias).
 
 > _«Uno escribe el código, otro lo cura, el tercero lo cuestiona, el cuarto lo despliega. Juntos: ETC — El Cuarteto Calavera.»_
 
@@ -45,7 +45,7 @@ Incluye un **Modo Integración de APIs** para configurar servicios externos (Sup
 
 ## 🤝 Colaboración entre Agentes
 
-Los 4 agentes de ETC no trabajan en aislamiento — se invocan entre sí automáticamente según el contexto. Hay **23 hooks de colaboración** (C1–C23) documentados en sus instrucciones, y cada agente integra internamente la lógica de sus especialidades.
+Los 4 agentes de ETC no trabajan en aislamiento — se invocan entre sí automáticamente según el contexto. Hay **20 hooks de colaboración** (C1–C20) documentados en sus instrucciones, y cada agente integra internamente la lógica de sus especialidades.
 
 > _«El Maestro implementa, Bug Doctor diagnostica, El de las Gafas clarifica, Las Manos despliega. El que calla una duda al compañero, la paga con un bug.»_
 
@@ -60,7 +60,7 @@ Cada agente tiene un rol primario claro, y cuando detecta que está fuera de su 
 | 🤓 **El de las Gafas** | Clarificar ubiquitous language y documentación | 🧪 Maestro (blindar con tests), 🩺 Bug Doctor (bugs por ambigüedad), 🖐️ Manos (infra/secretos) |
 | 🖐️ **Las Manos** | Infraestructura, CI/CD, secretos, dependencias, incidentes, worktrees, auditoría de skills | 🧪 Maestro (deploy feature), 🩺 Bug Doctor (incidentes), 🤓 Gafas (ADR operacionales) |
 
-### Las 23 colaboraciones (C1–C23)
+### Los 20 hooks de colaboración (C1–C20)
 
 #### Hooks C1–C14: El Trío Original (Maestro ↔ Bug Doctor ↔ Gafas)
 
@@ -92,14 +92,6 @@ Cada agente tiene un rol primario claro, y cuando detecta que está fuera de su 
 | C19 | 🤓 Gafas | ADR necesita restricciones de infra | 🖐️ Manos | Contexto operacional para el ADR |
 | C20 | 🤓 Gafas | Secretos en documentación de dominio | 🖐️ Manos | Limpieza + prevención de leaks |
 
-#### Hooks C21–C23: Gafas profundiza la arquitectura
-
-| # | Inicia | Gatillo | Invoca a | Resultado |
-|---|--------|---------|----------|-----------|
-| C21 | 🤓 Gafas | Subdominio Core sin tests ni inversión | 🧪 Maestro | Ciclo de deepening con TDD |
-| C22 | 🤓 Gafas | Módulo shallow con bugs frecuentes | 🩺 Bug Doctor | Diagnóstico en paralelo |
-| C23 | 🤓 Gafas | Nuevo bounded context descubierto | 🧪 Maestro | Mapa de contextos actualizado |
-
 ### Lógica especializada absorbida
 
 Cada agente principal integra la lógica de sus especialidades sin necesidad de sub-agentes:
@@ -109,7 +101,7 @@ Cada agente principal integra la lógica de sus especialidades sin necesidad de 
 | 🤓 **El de las Gafas** | ddd-strategic-design (subdominios), ddd-context-mapping (patrones bounded context), improve-codebase-architecture (deepening) |
 | 🖐️ **Las Manos** | senior-devops (CI/CD, Docker, IaC), dependency-auditor (CVEs, licencias), env-secrets-manager (.env, leaks), incident-commander (SEV-0→3), git-worktree-manager, skill-security-auditor, git-guardrails, setup-pre-commit |
 
-### Ciclos compuestos — cuando las 23 colaboraciones se encadenan
+### Ciclos compuestos — cuando los 20 hooks se encadenan
 
 #### 🐛🔍 "Bug revela deuda de dominio" (C7→C11→C10→C14)
 
@@ -171,11 +163,9 @@ Cada agente tiene reglas duras de delegación — no sugerencias, sino checkpoin
 | 🩺 Bug Doctor | → Manos | Falta tooling de diagnóstico |
 | 🤓 Gafas | → Bug Doctor | Código ≠ docs |
 | 🤓 Gafas | → Maestro | Término clarificado / ADR creado |
-| 🦾 Manos | → Maestro | Entorno listo |
-| 🦾 Manos | → Bug Doctor | Fallo de sistema/runtime |
-| 🦾 Manos | → Gafas | Tooling afecta al equipo |
-
-Y documenta el nuevo Modo Integración de APIs en la sección de Las Manos.
+| 🖐️ Manos | → Maestro | Entorno listo |
+| 🖐️ Manos | → Bug Doctor | Fallo de sistema/runtime |
+| 🖐️ Manos | → Gafas | Tooling afecta al equipo |
 
 ---
 
@@ -205,16 +195,18 @@ tu-proyecto/
 │       ├── skill-security-auditor/SKILL.md
 │       ├── git-guardrails/SKILL.md
 │       ├── setup-pre-commit/SKILL.md
-│       └── ... (17 skills complementarias)
+│       └── ... (17 skills genéricas complementarias)
 ├── opencode.json
 └── README.md
 ```
 
 ---
 
-## Skills Complementarias
+## Skills Complementarias (28)
 
-Además de las 4 principales, este repo incluye skills especializadas y 17 complementarias:
+Además de las 4 skills principales de ETC, este repo incluye 28 skills especializadas y complementarias:
+
+### Skills Genéricas y de Soporte (17)
 
 | Skill | Especialidad |
 |-------|-------------|
@@ -236,7 +228,25 @@ Además de las 4 principales, este repo incluye skills especializadas y 17 compl
 | `sre` | SLOs, error budgets, observabilidad |
 | `technical-writer` | Documentación para desarrolladores |
 
-**Total: 4 agentes principales con lógica especializada absorbida + 32 skills complementarias/operacionales.**
+### Skills Especializadas de Dominio y Operaciones (11)
+
+Estas skills están absorbidas como modos internos de El de las Gafas y Las Manos:
+
+| Skill | Especialidad | Absorbida por |
+|-------|-------------|---------------|
+| `ddd-strategic-design` | Clasificación de subdominios (Core/Supporting/Generic) | 🤓 El de las Gafas |
+| `ddd-context-mapping` | Patrones formales de bounded context | 🤓 El de las Gafas |
+| `improve-codebase-architecture` | Deepening arquitectónico | 🤓 El de las Gafas |
+| `senior-devops` | CI/CD, Docker, Infraestructura como Código | 🖐️ Las Manos |
+| `dependency-auditor` | Auditoría de CVEs, licencias, versiones | 🖐️ Las Manos |
+| `env-secrets-manager` | Gestión de .env, rotación, detección de leaks | 🖐️ Las Manos |
+| `incident-commander` | Respuesta a incidentes (SEV-0→3) | 🖐️ Las Manos |
+| `git-worktree-manager` | Worktrees para entornos paralelos | 🖐️ Las Manos |
+| `skill-security-auditor` | Auditoría de skills de terceros | 🖐️ Las Manos |
+| `git-guardrails` | Pre-commit hooks de seguridad | 🖐️ Las Manos |
+| `setup-pre-commit` | Instalación y configuración de pre-commit | 🖐️ Las Manos |
+
+**Total: 4 agentes principales con lógica especializada absorbida + 32 skills (4 de agentes + 28 complementarias).**
 
 ---
 
@@ -305,6 +315,22 @@ Luego en OpenCode:
 @el-de-las-gafas revisa mi modelo de dominio
 @las-manos configura el pipeline de CI/CD
 ```
+
+---
+
+## 📦 Releases
+
+### v1.0.0 — El Cuarteto Calavera (2026-05-08)
+
+Primera release estable del Cuarteto Calavera:
+- 🧪 **El Maestro** — TDD Orchestrator con ciclo completo INIT→PLAN→RED→GREEN→REFACTOR→REVIEW→COMMIT
+- 🩺 **Bug Doctor** — Diagnóstico forense de 6 fases con principio de repro determinista
+- 🤓 **El de las Gafas** — Domain Moderator con DDD, context mapping, y deepening arquitectónico
+- 🖐️ **Las Manos** — Infrastructure & Ops con CI/CD, secretos, dependencias, incidentes y Modo Integración de APIs
+- **20 hooks de colaboración** (C1–C20) entre los 4 agentes
+- **11 reglas de delegación obligatoria** — checkpoints estrictos que garantizan calidad
+- **32 skills** en `.opencode/skills/` (4 de agentes + 28 complementarias)
+- **Modo Integración de APIs** en Las Manos: Supabase, Google OAuth, Stripe, GitHub, AWS
 
 ---
 
