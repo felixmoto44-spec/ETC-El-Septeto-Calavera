@@ -34,6 +34,114 @@ Moderador de dominio que ve lo que otros pasan por alto: términos ambiguos, con
 
 ---
 
+
+## 🤝 Colaboración entre Agentes
+
+Los 3 agentes de ETC no trabajan en aislamiento — se invocan entre sí automáticamente según el contexto. Hay **14 hooks de colaboración** documentados en sus instrucciones, formando un sistema vivo donde el conocimiento fluye entre diagnóstico, implementación y clarificación.
+
+> _«El Maestro implementa, Bug Doctor diagnostica, El de las Gafas clarifica. El que calla una duda al compañero, la paga con un bug.»_
+
+### El patrón: Implementar → Diagnosticar → Clarificar
+
+Cada agente tiene un rol primario claro, y cuando detecta que está fuera de su especialidad, deriva al colega adecuado:
+
+| Agente | Rol primario | Deriva a... |
+|--------|-------------|-------------|
+| 🧪 **El Maestro** | Implementar features y fixes con TDD | 🤓 Gafas (cuando el dominio es ambiguo) y 🩺 Bug Doctor (cuando hay bugs complejos) |
+| 🩺 **Bug Doctor** | Diagnosticar causa raíz de bugs | 🧪 Maestro (para implementar el fix con TDD) y 🤓 Gafas (cuando el bug es síntoma de deuda de dominio) |
+| 🤓 **El de las Gafas** | Clarificar el ubiquitous language y mantener documentación viva | 🧪 Maestro (para blindar reglas de dominio con tests) y 🩺 Bug Doctor (cuando la ambigüedad ya causó bugs) |
+
+### Las 14 colaboraciones
+
+Cada hook está numerado (C1–C14) y documentado en el archivo del agente que **inicia** la colaboración:
+
+| # | Inicia | Gatillo | Invoca a | Resultado |
+|---|--------|---------|----------|-----------|
+| C1 | 🧪 Maestro | Modo Diagnóstico: bug complejo reportado | 🩺 Bug Doctor | Diagnóstico forense con causa raíz |
+| C2 | 🧪 Maestro | INIT/PLAN: feature toca términos no documentados | 🤓 Gafas | Términos clarificados antes de diseñar |
+| C3 | 🧪 Maestro | PLAN: se crean o modifican entidades de dominio | 🤓 Gafas | Diseño validado contra el glosario |
+| C4 | 🧪 Maestro | PLAN con score BLOCK (60+) y riesgo de dominio | 🤓 Gafas | Segunda mirada en decisiones de alto impacto |
+| C5 | 🧪 Maestro | REVIEW: naming inconsistente con CONTEXT.md | 🤓 Gafas | Código alineado con ubiquitous language |
+| C6 | 🧪 Maestro | REVIEW: bugs descubiertos en código existente | 🩺 Bug Doctor | Bugs huérfanos diagnosticados |
+| C7 | 🩺 Bug Doctor | Hipótesis involucra reglas de negocio | 🤓 Gafas | Verificación contra modelo de dominio |
+| C8 | 🩺 Bug Doctor | Falta infraestructura de testing | 🧪 Maestro | Mini-ciclo TDD para test de repro |
+| C9 | 🩺 Bug Doctor | Causa raíz confirmada, fix listo | 🧪 Maestro | Fix implementado con disciplina TDD |
+| C10 | 🩺 Bug Doctor | Autopsia revela deuda de documentación | 🤓 Gafas | CONTEXT.md actualizado, ADR si procede |
+| C11 | 🤓 Gafas | Contradicción grave código ↔ discurso | 🩺 Bug Doctor | Bug de lógica de negocio diagnosticado |
+| C12 | 🤓 Gafas | Regla de dominio documentada sin tests | 🧪 Maestro | Ciclo TDD para blindar la regla |
+| C13 | 🤓 Gafas | ADR que impacta arquitectura | 🧪 Maestro | Maestro notificado para futuras features |
+| C14 | 🤓 Gafas | Patrón de ambigüedad recurrente (múltiples módulos) | 🩺 Bug Doctor | Diagnóstico preventivo de bugs latentes |
+
+### Ciclos compuestos — cuando las 14 colaboraciones se encadenan
+
+Los hooks no son eventos aislados: se encadenan formando ciclos compuestos que cubren escenarios completos de desarrollo:
+
+#### 🐛🔍 "Bug revela deuda de dominio"
+
+El ciclo más virtuoso: un bug expone que el lenguaje del dominio está corrupto, y los 3 agentes colaboran para curarlo de raíz.
+
+```
+C7: Bug Doctor → Gafas ("¿este bug es malentendido del dominio?")
+ ↓
+C11: Gafas → Bug Doctor ("sí, el código contradice el glosario. Diagnostica el impacto")
+ ↓
+C10: Bug Doctor → Gafas ("autopsia: documenta esto en CONTEXT.md para que no se repita")
+ ↓
+C14: Gafas → Bug Doctor ("hay un patrón de ambigüedad en 3 módulos. Diagnostica preventivamente")
+```
+
+**Resultado**: no solo se arregla el bug — se cura el lenguaje que lo causó y se previenen bugs futuros.
+
+#### 🧪🤓 "Feature con validación de dominio"
+
+Cuando El Maestro va a implementar una feature que toca reglas de negocio, El de las Gafas lo acompaña de principio a fin:
+
+```
+C2/C3/C4: Maestro → Gafas ("clarifica términos / revisa diseño / valida alto riesgo")
+ ↓
+C12: Gafas → Maestro ("esa regla de dominio no tiene tests. Abre un ciclo TDD para blindarla")
+ ↓
+C5: Maestro → Gafas ("código listo, ¿el naming respeta el glosario?")
+ ↓
+C13: Gafas → Maestro ("creé ADR-000X. Consúltalo en futuras features que toquen esto")
+```
+
+**Resultado**: la feature sale con ubiquitous language consistente, tests que blindan las reglas de dominio, y un ADR que guiará a quien toque ese código después.
+
+#### 🩺🧪 "Fix con garantías TDD"
+
+Bug Doctor encuentra la causa raíz, pero no implementa el fix a lo loco — se lo entrega al Maestro con todas las garantías:
+
+```
+C9: Bug Doctor → Maestro ("causa raíz confirmada. Toma el fix y mi test de regresión")
+ ↓
+Maestro ejecuta RED → GREEN → REFACTOR → REVIEW
+ ↓
+C6: Maestro → Bug Doctor ("encontré más bugs durante el quality-gate")
+ ↓
+C8: Bug Doctor → Maestro ("necesito tests de repro para estas hipótesis")
+```
+
+**Resultado**: el fix no es un parche — es un ciclo TDD completo con test de regresión, quality-gate, y bugs secundarios derivados.
+
+#### 🤓🔍 "De la ambigüedad al blindaje"
+
+Una sesión de clarificación de dominio dispara una cascada de acciones concretas:
+
+```
+C14: Gafas → Bug Doctor ("término X usado inconsistentemente. Diagnostica bugs latentes")
+ ↓
+C7: Bug Doctor → Gafas ("confirmado: la ambigüedad ya causó un bug sutil. ¿Está esto documentado?")
+ ↓
+C8: Bug Doctor → Maestro ("necesito tests de repro para blindar este edge case")
+ ↓
+C12: Gafas → Maestro ("regla documentada. Ahora blíndala con tests")
+```
+
+**Resultado**: lo que empezó como "este término es ambiguo" termina con documentación actualizada, bugs latentes diagnosticados, y tests que blindan el comportamiento correcto.
+
+---
+
 ## Estructura de Archivos
 
 Para implementar estas skills en tu proyecto, necesitas esta estructura:
@@ -160,112 +268,6 @@ Las 3 skills principales existen en **ambos formatos** — como skill (para usar
 
 ---
 
-## 🤝 Colaboración entre Agentes
-
-Los 3 agentes de ETC no trabajan en aislamiento — se invocan entre sí automáticamente según el contexto. Hay **14 hooks de colaboración** documentados en sus instrucciones, formando un sistema vivo donde el conocimiento fluye entre diagnóstico, implementación y clarificación.
-
-> _«El Maestro implementa, Bug Doctor diagnostica, El de las Gafas clarifica. El que calla una duda al compañero, la paga con un bug.»_
-
-### El patrón: Implementar → Diagnosticar → Clarificar
-
-Cada agente tiene un rol primario claro, y cuando detecta que está fuera de su especialidad, deriva al colega adecuado:
-
-| Agente | Rol primario | Deriva a... |
-|--------|-------------|-------------|
-| 🧪 **El Maestro** | Implementar features y fixes con TDD | 🤓 Gafas (cuando el dominio es ambiguo) y 🩺 Bug Doctor (cuando hay bugs complejos) |
-| 🩺 **Bug Doctor** | Diagnosticar causa raíz de bugs | 🧪 Maestro (para implementar el fix con TDD) y 🤓 Gafas (cuando el bug es síntoma de deuda de dominio) |
-| 🤓 **El de las Gafas** | Clarificar el ubiquitous language y mantener documentación viva | 🧪 Maestro (para blindar reglas de dominio con tests) y 🩺 Bug Doctor (cuando la ambigüedad ya causó bugs) |
-
-### Las 14 colaboraciones
-
-Cada hook está numerado (C1–C14) y documentado en el archivo del agente que **inicia** la colaboración:
-
-| # | Inicia | Gatillo | Invoca a | Resultado |
-|---|--------|---------|----------|-----------|
-| C1 | 🧪 Maestro | Modo Diagnóstico: bug complejo reportado | 🩺 Bug Doctor | Diagnóstico forense con causa raíz |
-| C2 | 🧪 Maestro | INIT/PLAN: feature toca términos no documentados | 🤓 Gafas | Términos clarificados antes de diseñar |
-| C3 | 🧪 Maestro | PLAN: se crean o modifican entidades de dominio | 🤓 Gafas | Diseño validado contra el glosario |
-| C4 | 🧪 Maestro | PLAN con score BLOCK (60+) y riesgo de dominio | 🤓 Gafas | Segunda mirada en decisiones de alto impacto |
-| C5 | 🧪 Maestro | REVIEW: naming inconsistente con CONTEXT.md | 🤓 Gafas | Código alineado con ubiquitous language |
-| C6 | 🧪 Maestro | REVIEW: bugs descubiertos en código existente | 🩺 Bug Doctor | Bugs huérfanos diagnosticados |
-| C7 | 🩺 Bug Doctor | Hipótesis involucra reglas de negocio | 🤓 Gafas | Verificación contra modelo de dominio |
-| C8 | 🩺 Bug Doctor | Falta infraestructura de testing | 🧪 Maestro | Mini-ciclo TDD para test de repro |
-| C9 | 🩺 Bug Doctor | Causa raíz confirmada, fix listo | 🧪 Maestro | Fix implementado con disciplina TDD |
-| C10 | 🩺 Bug Doctor | Autopsia revela deuda de documentación | 🤓 Gafas | CONTEXT.md actualizado, ADR si procede |
-| C11 | 🤓 Gafas | Contradicción grave código ↔ discurso | 🩺 Bug Doctor | Bug de lógica de negocio diagnosticado |
-| C12 | 🤓 Gafas | Regla de dominio documentada sin tests | 🧪 Maestro | Ciclo TDD para blindar la regla |
-| C13 | 🤓 Gafas | ADR que impacta arquitectura | 🧪 Maestro | Maestro notificado para futuras features |
-| C14 | 🤓 Gafas | Patrón de ambigüedad recurrente (múltiples módulos) | 🩺 Bug Doctor | Diagnóstico preventivo de bugs latentes |
-
-### Ciclos compuestos — cuando las 14 colaboraciones se encadenan
-
-Los hooks no son eventos aislados: se encadenan formando ciclos compuestos que cubren escenarios completos de desarrollo:
-
-#### 🐛🔍 "Bug revela deuda de dominio"
-
-El ciclo más virtuoso: un bug expone que el lenguaje del dominio está corrupto, y los 3 agentes colaboran para curarlo de raíz.
-
-```
-C7: Bug Doctor → Gafas ("¿este bug es malentendido del dominio?")
- ↓
-C11: Gafas → Bug Doctor ("sí, el código contradice el glosario. Diagnostica el impacto")
- ↓
-C10: Bug Doctor → Gafas ("autopsia: documenta esto en CONTEXT.md para que no se repita")
- ↓
-C14: Gafas → Bug Doctor ("hay un patrón de ambigüedad en 3 módulos. Diagnostica preventivamente")
-```
-
-**Resultado**: no solo se arregla el bug — se cura el lenguaje que lo causó y se previenen bugs futuros.
-
-#### 🧪🤓 "Feature con validación de dominio"
-
-Cuando El Maestro va a implementar una feature que toca reglas de negocio, El de las Gafas lo acompaña de principio a fin:
-
-```
-C2/C3/C4: Maestro → Gafas ("clarifica términos / revisa diseño / valida alto riesgo")
- ↓
-C12: Gafas → Maestro ("esa regla de dominio no tiene tests. Abre un ciclo TDD para blindarla")
- ↓
-C5: Maestro → Gafas ("código listo, ¿el naming respeta el glosario?")
- ↓
-C13: Gafas → Maestro ("creé ADR-000X. Consúltalo en futuras features que toquen esto")
-```
-
-**Resultado**: la feature sale con ubiquitous language consistente, tests que blindan las reglas de dominio, y un ADR que guiará a quien toque ese código después.
-
-#### 🩺🧪 "Fix con garantías TDD"
-
-Bug Doctor encuentra la causa raíz, pero no implementa el fix a lo loco — se lo entrega al Maestro con todas las garantías:
-
-```
-C9: Bug Doctor → Maestro ("causa raíz confirmada. Toma el fix y mi test de regresión")
- ↓
-Maestro ejecuta RED → GREEN → REFACTOR → REVIEW
- ↓
-C6: Maestro → Bug Doctor ("encontré más bugs durante el quality-gate")
- ↓
-C8: Bug Doctor → Maestro ("necesito tests de repro para estas hipótesis")
-```
-
-**Resultado**: el fix no es un parche — es un ciclo TDD completo con test de regresión, quality-gate, y bugs secundarios derivados.
-
-#### 🤓🔍 "De la ambigüedad al blindaje"
-
-Una sesión de clarificación de dominio dispara una cascada de acciones concretas:
-
-```
-C14: Gafas → Bug Doctor ("término X usado inconsistentemente. Diagnostica bugs latentes")
- ↓
-C7: Bug Doctor → Gafas ("confirmado: la ambigüedad ya causó un bug sutil. ¿Está esto documentado?")
- ↓
-C8: Bug Doctor → Maestro ("necesito tests de repro para blindar este edge case")
- ↓
-C12: Gafas → Maestro ("regla documentada. Ahora blíndala con tests")
-```
-
-**Resultado**: lo que empezó como "este término es ambiguo" termina con documentación actualizada, bugs latentes diagnosticados, y tests que blindan el comportamiento correcto.
-
----
 
 ## Skills Complementarias
 
