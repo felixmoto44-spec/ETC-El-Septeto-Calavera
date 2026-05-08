@@ -1,0 +1,195 @@
+name: Validate ETC Structure
+
+on:
+  push:
+    branches: [master, main]
+    paths:
+      - '.opencode/**'
+      - 'opencode.json'
+  pull_request:
+    branches: [master, main]
+    paths:
+      - '.opencode/**'
+      - 'opencode.json'
+
+jobs:
+  validate-agents:
+    name: Validate agent frontmatter
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate agent files
+        run: |
+          echo "Validating agents in .opencode/agents/..."
+          FAILED=0
+
+          for agent_file in .opencode/agents/*.md; do
+            echo "Checking: $agent_file"
+
+            FRONTMATTER=$(sed -n '/^---$/,/^---$/p' "$agent_file" | head -n -1 | tail -n +2)
+
+            if ! echo "$FRONTMATTER" | grep -q "^description:"; then
+              echo "  FAIL: Missing 'description' field in $agent_file"
+              FAILED=1
+            else
+              echo "  OK description"
+            fi
+
+            if ! echo "$FRONTMATTER" | grep -q "^mode:"; then
+              echo "  FAIL: Missing 'mode' field in $agent_file"
+              FAILED=1
+            else
+              echo "  OK mode"
+            fi
+
+            MODE=$(echo "$FRONTMATTER" | grep "^mode:" | awk '{print $2}')
+            if [ "$MODE" != "subagent" ]; then
+              echo "  FAIL: mode must be 'subagent', found: '$MODE' in $agent_file"
+              FAILED=1
+            else
+              echo "  OK mode is 'subagent'"
+            fi
+          done
+
+          if [ $FAILED -ne 0 ]; then
+            echo ""
+            echo "Agent validation FAILED."
+            exit 1
+          fi
+
+          echo ""
+          echo "All agents validated."
+
+  validate-skills:
+    name: Validate skill frontmatter
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate skill files
+        run: |
+          echo "Validating skills in .opencode/skills/..."
+          FAILED=0
+          SKILL_COUNT=0
+
+          for skill_file in .opencode/skills/*/SKILL.md; do
+            echo "Checking: $skill_file"
+            SKILL_COUNT=$((SKILL_COUNT + 1))
+
+            FRONTMATTER=$(sed -n '/^---$/,/^---$/p' "$skill_file" | head -n -1 | tail -n +2)
+
+            if ! echo "$FRONTMATTER" | grep -q "^name:"; then
+              echo "  FAIL: Missing 'name' field in $skill_file"
+              FAILED=1
+            else
+              echo "  OK name"
+            fi
+
+            if ! echo "$FRONTMATTER" | grep -q "^description"; then
+              echo "  FAIL: Missing 'description' field in $skill_file"
+              FAILED=1
+            else
+              echo "  OK description"
+            fi
+
+            if ! echo "$FRONTMATTER" | grep -q "^license:"; then
+              echo "  FAIL: Missing 'license' field in $skill_file"
+              FAILED=1
+            else
+              echo "  OK license"
+            fi
+
+            if ! echo "$FRONTMATTER" | grep -q "^compatibility:"; then
+              echo "  FAIL: Missing 'compatibility' field in $skill_file"
+              FAILED=1
+            else
+              echo "  OK compatibility"
+            fi
+          done
+
+          echo ""
+          echo "Skills checked: $SKILL_COUNT"
+
+          if [ $FAILED -ne 0 ]; then
+            echo "Skill validation FAILED."
+            exit 1
+          fi
+
+          echo "All skills validated."
+
+  validate-opencode-json:
+    name: Validate opencode.json
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check opencode.json is valid JSON
+        run: |
+          echo "Validating opencode.json..."
+          if ! python3 -c "import json; json.load(open('opencode.json'))" 2>&1; then
+            echo "opencode.json is not valid JSON"
+            exit 1
+          fi
+          echo "OK Valid JSON"
+
+      - name: Check opencode.json has allowlist
+        run: |
+          SKILL_COUNT=$(python3 -c "
+          import json
+          with open('opencode.json') as f:
+              config = json.load(f)
+          skills = config.get('permission', {}).get('skill', {})
+          print(len([k for k in skills if k != '*']))
+          ")
+
+          WILDCARD=$(python3 -c "
+          import json
+          with open('opencode.json') as f:
+              config = json.load(f)
+          skills = config.get('permission', {}).get('skill', {})
+          print(skills.get('*', 'not_set'))
+          ")
+
+          if [ "$WILDCARD" != "deny" ]; then
+            echo "FAIL: opencode.json must have '*': 'deny' as last rule"
+            exit 1
+          fi
+
+          if [ "$SKILL_COUNT" -lt 6 ]; then
+            echo "FAIL: opencode.json must list at least the 6 ETC agents in allowlist"
+            exit 1
+          fi
+
+          echo "OK Allowlist has $SKILL_COUNT skills + deny wildcard"
+
+      - name: Check skill-json sync
+        run: |
+          echo "Checking that all skills in .opencode/skills/ are listed in opencode.json..."
+          FAILED=0
+
+          for skill_dir in .opencode/skills/*/; do
+            SKILL_NAME=$(basename "$skill_dir")
+            if ! python3 -c "
+          import json
+          with open('opencode.json') as f:
+              config = json.load(f)
+          skills = config.get('permission', {}).get('skill', {})
+          exit(0 if '$SKILL_NAME' in skills else 1)
+          " 2>/dev/null; then
+              echo "  FAIL: Skill '$SKILL_NAME' exists in .opencode/skills/ but NOT in opencode.json"
+              FAILED=1
+            else
+              echo "  OK $SKILL_NAME"
+            fi
+          done
+
+          if [ $FAILED -ne 0 ]; then
+            echo "Sync check FAILED. Add missing skills to opencode.json allowlist."
+            exit 1
+          fi
+
+          echo "All skills synced with opencode.json."
