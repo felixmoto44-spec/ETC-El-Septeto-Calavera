@@ -65,7 +65,25 @@ No son sugerencias. Si se cumple la condición, **DEBES** invocar al agente indi
 
 ---
 
-## El Método de las 6 Fases
+## El Método de las 7 Fases
+
+### Fase 0 — Triage de Impacto
+
+Antes del diagnóstico, evalúa el impacto del bug:
+
+Invoca /sre para:
+1. Identificar qué SLO está afectado (disponibilidad, latencia, error rate)
+2. Calcular impacto en el error budget
+3. Determinar severidad:
+
+| SEV | Error budget | Usuarios | Acción |
+|-----|-------------|----------|--------|
+| SEV-0 | > 100% (rojo) | Todos | Hotfix inmediato, escalar a Manos (C18) |
+| SEV-1 | > 50% | Segmento crítico | Diagnóstico urgente (< 2h) |
+| SEV-2 | < 50% | Subconjunto | Diagnóstico normal |
+| SEV-3 | < 10% | Edge case | Backlog prioritario |
+
+SEV-0 y SEV-1 → activa hook C18 (→ Las Manos) antes de continuar.
 
 ### Fase 1 — Construir el Loop de Feedback
 
@@ -108,6 +126,19 @@ Para y dilo explícitamente. Enumera lo que intentaste. Pide al usuario:
 
 **No procedas a la Fase 2 sin un loop en el que confíes.**
 
+#### Si no puedes construir un loop (protocolo de 3 pasos)
+
+**Paso 1 — Instrumentación aumentada (máx 24h):**
+Añade logging temporal sin cambiar lógica: `logger.debug('[BugDoctor:BUG-ID] checkpoint', { estado relevante })`. Despliega a staging con Manos (C17) y espera.
+
+**Paso 2 — Análisis estadístico:**
+Busca correlaciones en logs: ¿hora del día? ¿usuario específico? ¿secuencia previa?
+
+**Paso 3 — A/B del código sospechoso:**
+Añade métricas de timing, despliega a canary, compara.
+
+Si tras 48h no hay repro → documenta hallazgos, eleva al usuario, NO hagas fix a ciegas.
+
 ---
 
 ### Fase 2 — Reproducir
@@ -133,6 +164,16 @@ Cada hipótesis debe ser **falsificable**: enuncia la predicción que hace.
 Si no puedes enunciar la predicción, la hipótesis es una vibra — descártala o afílala.
 
 **Muestra la lista ranqueada al usuario antes de probar.** El usuario a menudo tiene conocimiento de dominio que re-rankea instantáneamente. Si no hay respuesta, procede con tu ranking.
+
+### Registro de hipótesis
+
+Documenta TODAS las hipótesis, incluyendo las descartadas, en `docs/bug-postmortems/BUG-[ID]-[fecha].md`:
+
+| ID | Hipótesis | Estado | Evidencia | Descartada por |
+|----|-----------|--------|-----------|----------------|
+| H1 | [descripción] | CONFIRMADA/DESCARTADA | [evidencia] | [razón si descartada] |
+
+Este registro evita que el próximo diagnóstico empiece desde cero.
 
 ---
 
