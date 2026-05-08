@@ -150,24 +150,6 @@ Las 3 skills principales existen en **ambos formatos** — como skill (para usar
 
 ---
 
-## Lo Aprendido
-
-Estas son las lecciones clave tras implementar y probar este sistema:
-
-1. **Skills para Plan/Build, Agents para @menciones**. Las skills son ideales para inyectar conocimiento especializado en una conversación (análisis, revisión). Los agents son mejores para tareas autónomas que requieren personalidad persistente y flujo de trabajo propio.
-
-2. **Ambos formatos para la misma herramienta**. Tener el-maestro como skill Y como agent permite usarlo de dos formas: integrado en la conversación (`/el-maestro`) o como entidad independiente (`@el-maestro`). Esto es valioso para herramientas complejas.
-
-3. **Disponibilidad global con `~/.config/opencode/`**. Las skills y agents en el directorio de configuración global están disponibles en todos los proyectos. Esto elimina la fricción de copiar archivos a cada repo nuevo.
-
-4. **El formato importa**. El frontmatter YAML es lo que OpenCode usa para descubrir y catalogar skills/agents. Sin `mode: subagent`, un agente no se reconoce como tal. Sin `name` y `description`, una skill no aparece en la lista de disponibles.
-
-5. **Directorios separados para responsabilidades distintas**. `.opencode/skills/` y `.opencode/agents/` tienen propósitos diferentes aunque coexistan. Mantenerlos separados evita confusión sobre qué es qué.
-
-6. **Las skills pueden tener archivos auxiliares**. `el-de-las-gafas` incluye `ADR-FORMAT.md` y `CONTEXT-FORMAT.md` como referencia. La skill los referencia desde `SKILL.md` pero no son cargados automáticamente — son documentación complementaria para quien mantiene la skill.
-
----
-
 ## Skills Complementarias
 
 Además de las 3 principales, este repo incluye 17 skills adicionales para diferentes especialidades:
