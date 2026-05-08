@@ -43,7 +43,7 @@ El cuarto calavera, especialista en todo lo operacional: pipelines de CI/CD, con
 
 ## 🤝 Colaboración entre Agentes
 
-Los 4 agentes de ETC no trabajan en aislamiento — se invocan entre sí automáticamente según el contexto. Hay **30 hooks de colaboración** (C1–C30) documentados en sus instrucciones, formando un sistema vivo donde el conocimiento fluye entre implementación, diagnóstico, clarificación y operaciones.
+Los 4 agentes de ETC no trabajan en aislamiento — se invocan entre sí automáticamente según el contexto. Hay **20 hooks de colaboración** (C1–C20) documentados en sus instrucciones, y cada agente integra internamente la lógica de sus especialidades.
 
 > _«El Maestro implementa, Bug Doctor diagnostica, El de las Gafas clarifica, Las Manos despliega. El que calla una duda al compañero, la paga con un bug.»_
 
@@ -56,9 +56,9 @@ Cada agente tiene un rol primario claro, y cuando detecta que está fuera de su 
 | 🧪 **El Maestro** | Implementar features y fixes con TDD | 🤓 Gafas (dominio), 🩺 Bug Doctor (bugs), 🖐️ Manos (deploy/env) |
 | 🩺 **Bug Doctor** | Diagnosticar causa raíz de bugs | 🧪 Maestro (implementar fix), 🤓 Gafas (deuda de dominio), 🖐️ Manos (entorno/seguridad) |
 | 🤓 **El de las Gafas** | Clarificar ubiquitous language y documentación | 🧪 Maestro (blindar con tests), 🩺 Bug Doctor (bugs por ambigüedad), 🖐️ Manos (infra/secretos) |
-| 🖐️ **Las Manos** | Infraestructura, CI/CD, secretos, dependencias | 🧪 Maestro (deploy feature), 🩺 Bug Doctor (incidentes), 🤓 Gafas (ADR operacionales) + sub-agentes especializados |
+| 🖐️ **Las Manos** | Infraestructura, CI/CD, secretos, dependencias, incidentes, worktrees, auditoría de skills | 🧪 Maestro (deploy feature), 🩺 Bug Doctor (incidentes), 🤓 Gafas (ADR operacionales) |
 
-### Las 30 colaboraciones (C1–C30)
+### Las 20 colaboraciones (C1–C20)
 
 #### Hooks C1–C14: El Trío Original (Maestro ↔ Bug Doctor ↔ Gafas)
 
@@ -90,22 +90,16 @@ Cada agente tiene un rol primario claro, y cuando detecta que está fuera de su 
 | C19 | 🤓 Gafas | ADR necesita restricciones de infra | 🖐️ Manos | Contexto operacional para el ADR |
 | C20 | 🤓 Gafas | Secretos en documentación de dominio | 🖐️ Manos | Limpieza + prevención de leaks |
 
-#### Hooks C21–C30: Las Manos orquesta sus sub-agentes especializados
+### Lógica especializada absorbida
 
-| # | Inicia | Gatillo | Invoca a | Resultado |
-|---|--------|---------|----------|-----------|
-| C21 | 🖐️ Manos | Crear/actualizar pipeline CI/CD | **senior-devops** | Pipeline multi-stage con Docker e IaC |
-| C22 | 🖐️ Manos | Auditoría de dependencias | **dependency-auditor** | CVEs, licencias y versiones reportadas |
-| C23 | 🖐️ Manos | Gestión de secretos y leaks | **env-secrets-manager** | Secretos rotados, leaks limpiados |
-| C24 | 🖐️ Manos | Incidente en producción | **incident-commander** | Severidad, roles, mitigación, post-mortem |
-| C25 | 🖐️ Manos | Trabajo paralelo en múltiples branches | **git-worktree-manager** | Worktrees aislados y sincronizados |
-| C26 | 🖐️ Manos | Skill de terceros a instalar | **skill-security-auditor** | Auditoría de seguridad antes de instalar |
-| C27 | 🖐️ Manos | Configurar git hooks de seguridad | **git-guardrails** | pre-commit + pre-push con gitleaks |
-| C28 | 🖐️ Manos | Proyecto sin pre-commit | **setup-pre-commit** | Framework instalado con hooks estándar |
-| C29 | 🖐️ Manos | Post-mortem post-incidente | inc-commander + devops | Documentación + salvaguardas permanentes |
-| C30 | 🖐️ Manos | Auditoría completa de seguridad | auditor + secrets + deps | Reporte consolidado de seguridad |
+Cada agente principal integra la lógica de sus especialidades sin necesidad de sub-agentes:
 
-### Ciclos compuestos — cuando las 30 colaboraciones se encadenan
+| Agente | Skills absorbidas |
+|--------|-------------------|
+| 🤓 **El de las Gafas** | ddd-strategic-design (subdominios), ddd-context-mapping (patrones bounded context), improve-codebase-architecture (deepening) |
+| 🖐️ **Las Manos** | senior-devops (CI/CD, Docker, IaC), dependency-auditor (CVEs, licencias), env-secrets-manager (.env, leaks), incident-commander (SEV-0→3), git-worktree-manager, skill-security-auditor, git-guardrails, setup-pre-commit |
+
+### Ciclos compuestos — cuando las 20 colaboraciones se encadenan
 
 #### 🐛🔍 "Bug revela deuda de dominio" (C7→C11→C10→C14)
 
@@ -131,28 +125,26 @@ C5: Maestro → Gafas ("código listo, ¿el naming respeta el glosario?")
 C13: Gafas → Maestro ("creé ADR-000X. Consúltalo en futuras features")
 ```
 
-#### 🖐️🚀 "Deploy con garantías" (C15→C16→C21→C23)
+#### 🖐️🚀 "Deploy con garantías" (C15→Manos→C16)
+Las Manos ejecuta internamente su lógica de CI/CD, secretos y dependencias:
 
 ```
 C15: Maestro → Manos ("necesito pipeline para deployar esta feature")
- ↓
-C16: Maestro → Manos (".env.example no coincide con la app")
- ↓
-C21: Manos → Senior DevOps ("configura pipeline multi-stage")
- ↓
-C23: Manos → Env Secrets Manager ("audita secretos antes del deploy")
+  ↓
+Las Manos activa sus modos: CI/CD → Secretos → Dependencias
+  ↓
+C16: Manos → Maestro ("entorno listo, deploy verificado")
 ```
 
-#### 🔒🛡️ "Incidente de seguridad" (C18→C24→C23→C29)
+#### 🔒🛡️ "Incidente de seguridad" (C18→Manos→incidente)
+Las Manos ejecuta internamente su lógica de respuesta a incidentes:
 
 ```
 C18: Bug Doctor → Manos ("¡secreto expuesto en el código!")
- ↓
-C24: Manos → Incident Commander ("declara SEV-1, coordina respuesta")
- ↓
-C23: Manos → Env Secrets Manager ("rota el secreto, limpia historial")
- ↓
-C29: Manos → Incident Commander + Senior DevOps ("post-mortem + salvaguardas")
+  ↓
+Las Manos activa sus modos: Incidentes (SEV-1) → Secretos (rotación) → Guardrails
+  ↓
+Manos → Bug Doctor ("incidente mitigado, post-mortem documentado")
 ```
 
 ---
@@ -162,30 +154,19 @@ C29: Manos → Incident Commander + Senior DevOps ("post-mortem + salvaguardas")
 ```
 tu-proyecto/
 ├── .opencode/
-│   ├── agents/              # Agentes (subagentes autónomos)
+│   ├── agents/              # Agentes del cuarteto
 │   │   ├── el-maestro.md
 │   │   ├── bug-doctor.md
 │   │   ├── el-de-las-gafas.md
-│   │   ├── las-manos.md
-│   │   ├── improve-codebase-architecture.md
-│   │   ├── ddd-context-mapping.md
-│   │   ├── ddd-strategic-design.md
-│   │   ├── senior-devops.md
-│   │   ├── dependency-auditor.md
-│   │   ├── env-secrets-manager.md
-│   │   ├── incident-commander.md
-│   │   ├── git-worktree-manager.md
-│   │   ├── skill-security-auditor.md
-│   │   ├── git-guardrails.md
-│   │   └── setup-pre-commit.md
-│   └── skills/              # Skills (instrucciones especializadas)
+│   │   └── las-manos.md
+│   └── skills/              # Skills (32 especialidades)
 │       ├── el-maestro/SKILL.md
 │       ├── bug-doctor/SKILL.md
 │       ├── el-de-las-gafas/SKILL.md
 │       ├── las-manos/SKILL.md
-│       ├── improve-codebase-architecture/SKILL.md
 │       ├── ddd-context-mapping/SKILL.md
 │       ├── ddd-strategic-design/SKILL.md
+│       ├── improve-codebase-architecture/SKILL.md
 │       ├── senior-devops/SKILL.md
 │       ├── dependency-auditor/SKILL.md
 │       ├── env-secrets-manager/SKILL.md
@@ -203,7 +184,7 @@ tu-proyecto/
 
 ## Skills Complementarias
 
-Además de las 4 principales y sus 11 sub-skills especializadas, este repo incluye 17 skills adicionales:
+Además de las 4 principales, este repo incluye skills especializadas y 17 complementarias:
 
 | Skill | Especialidad |
 |-------|-------------|
@@ -225,7 +206,7 @@ Además de las 4 principales y sus 11 sub-skills especializadas, este repo inclu
 | `sre` | SLOs, error budgets, observabilidad |
 | `technical-writer` | Documentación para desarrolladores |
 
-**Total: 4 agentes principales + 11 sub-agentes especializados + 17 skills complementarias = 32 skills/agentes.**
+**Total: 4 agentes principales con lógica especializada absorbida + 32 skills complementarias/operacionales.**
 
 ---
 
@@ -266,7 +247,7 @@ Instrucciones completas de personalidad, misión, reglas y flujo de trabajo...
 | Método | Sintaxis | Aplica a | Ejemplo |
 |--------|----------|----------|---------|
 | **@mención** | `@las-manos` | Agents | `@las-manos configura CI/CD` |
-| **/comando** | `/las-manos` | Skills y Agents | `/skill-security-auditor` |
+| **/comando** | `/las-manos` | Skills y Agents | `/skill-security-auditor` `/setup-pre-commit` |
 | **Lenguaje natural** | Describir la tarea | Skills | "Necesito auditar las dependencias" |
 
 ---
