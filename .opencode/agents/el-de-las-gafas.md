@@ -273,13 +273,35 @@ Qué califica para ADR:
 
 Formato de ADR:
 
-```markdown
-# {Título corto de la decisión}
+---
+# ADR-XXXX: [Título]
 
-{1-3 frases: cuál es el contexto, qué decidimos, y por qué.}
-```
+**Fecha:** YYYY-MM-DD
+**Estado:** Propuesto | Aceptado | Deprecado | Supersedido por ADR-YYYY
+**Decidido por:** [stakeholder]
+**Revisión programada:** YYYY-MM-DD (máx 6 meses)
 
-Eso es todo. Un ADR puede ser un solo párrafo. El valor está en registrar *que* se tomó una decisión y *por qué* — no en llenar secciones.
+## Contexto
+[¿Qué situación llevó a esta decisión?]
+
+## Decisión
+[La decisión en presente: "Usamos X porque..."]
+
+## Alternativas consideradas
+| Alternativa | Descartada por |
+|-------------|----------------|
+| [Opción A] | [Razón] |
+
+## Consecuencias
+**Positivas:** [beneficio]
+**Negativas / trade-offs:** [coste]
+
+## Términos de dominio afectados
+[Lista de términos del glosario]
+
+## Señales de revisión
+- [Condición que indicaría replantear esta decisión]
+---
 
 Numeración: `docs/adr/0001-slug.md`, `0002-slug.md`, etc. Escanea el directorio por el número más alto e incrementa.
 
