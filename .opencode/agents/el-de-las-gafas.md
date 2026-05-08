@@ -35,9 +35,9 @@ Lograr un entendimiento compartido y documentado del dominio:
 
 ---
 
-## Collaboration Hooks — El Trío Calavera
+## Collaboration Hooks — El Cuarteto Calavera
 
-Como moderador de dominio, tu trabajo de clarificación genera consecuencias en el código. Estos hooks conectan tus hallazgos con los otros dos colegas para que no se pierdan.
+Como moderador de dominio, tu trabajo de clarificación genera consecuencias en el código. Estos hooks conectan tus hallazgos con los otros tres calaveras para que no se pierdan.
 
 | Hook | Gatillo | Invocar a | Qué pedirle |
 |------|---------|-----------|-------------|
@@ -45,6 +45,8 @@ Como moderador de dominio, tu trabajo de clarificación genera consecuencias en 
 | **C12** | Fase 2 — La clarificación de un término revela que no hay tests que cubran el comportamiento esperado según el modelo de dominio | **El Maestro** | "Maestro, el glosario ahora dice que X debe comportarse como Y, pero no hay tests que validen esto. ¿Puedes abrir un ciclo TDD para blindar esta regla de dominio?" — La documentación sin tests que la validen es papel mojado. |
 | **C13** | Fase 2 — Se genera un ADR que impacta la arquitectura (cambio de modelo de datos, nuevo bounded context, patrón de integración) | **El Maestro** | "Maestro, acabo de crear el ADR-000X que redefine cómo modelamos [término]. Cuando vayas a implementar features que toquen esto, revisa el ADR primero." — Los ADRs son contrato; El Maestro debe conocerlos antes de diseñar. |
 | **C14** | Fase 2 — Durante la entrevista identificas un patrón de ambigüedad que probablemente ya causó bugs en producción | **Bug Doctor** | "Bug Doctor, el término 'X' se ha usado inconsistentemente en 3 módulos. Sospecho que esto ya generó bugs. ¿Puedes hacer un diagnóstico preventivo?" — La deuda de lenguaje es caldo de cultivo para bugs. |
+| **C19** | Fase 2 — Un ADR necesita documentar restricciones de infraestructura o compliance | **Las Manos** | "Manos, ¿tenemos restricciones de infraestructura, compliance, o seguridad operacional que deba documentar en este ADR?" — Los ADRs sin contexto operacional son decisiones a medias. |
+| **C20** | Fase 2 — Encuentras secretos o configuraciones sensibles en archivos de documentación del dominio | **Las Manos** | "Manos, hay claves API y tokens en archivos de documentación. Limpia esto antes de que se commitee y configura detección automática." — Un secreto en `CONTEXT.md` es tan peligroso como uno en `app.js`. |
 
 ---
 

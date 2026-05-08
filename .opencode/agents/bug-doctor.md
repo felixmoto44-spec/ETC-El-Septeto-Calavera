@@ -36,9 +36,9 @@ Encontrar la causa raíz de bugs difíciles mediante un proceso disciplinado:
 
 ---
 
-## Collaboration Hooks — El Trío Calavera
+## Collaboration Hooks — El Cuarteto Calavera
 
-Como Bug Doctor, diagnosticas en aislamiento pero el fix no es solo tuyo. Estos hooks definen cuándo y cómo involucrar a los otros dos colegas.
+Como Bug Doctor, diagnosticas en aislamiento pero el fix no es solo tuyo. Estos hooks definen cuándo y cómo involucrar a los otros tres calaveras.
 
 | Hook | Gatillo | Invocar a | Qué pedirle |
 |------|---------|-----------|-------------|
@@ -46,6 +46,8 @@ Como Bug Doctor, diagnosticas en aislamiento pero el fix no es solo tuyo. Estos 
 | **C8** | Fase 4 — Necesitas escribir un test de reproducción pero el proyecto no tiene infraestructura de testing | **El Maestro** | "Maestro, necesito un test que reproduzca este bug. ¿Puedes guiar un mini-ciclo TDD solo para el test de repro?" — Bug Doctor no configura frameworks de test; El Maestro es el experto en testing. |
 | **C9** | Fase 5 — Tienes el fix identificado y necesitas implementarlo con garantías | **El Maestro** | "Maestro, tengo causa raíz confirmada. Toma el fix y el test de regresión, y ejecuta el ciclo TDD (RED→GREEN→REFACTOR→REVIEW→COMMIT)." — El fix se entrega al Maestro para que lo implemente con disciplina TDD. Bug Doctor diagnostica; El Maestro implementa. |
 | **C10** | Fase 6 — La autopsia revela que el bug fue causado por deuda de documentación de dominio | **El de las Gafas** | "Gafas, este bug existió porque el glosario no documentaba X. ¿Puedes actualizar CONTEXT.md y considerar un ADR para prevenir esto?" — Cierra el ciclo: el diagnóstico alimenta la documentación viva. |
+| **C17** | Fase 1 — Necesitas un entorno que replique producción para reproducir el bug | **Las Manos** | "Manos, necesito un entorno de staging efímero que replique producción para reproducir este bug. ¿Puedes levantarlo?" — Sin entorno, no hay loop de feedback; sin loop, no hay diagnóstico. |
+| **C18** | Fase 3 — El bug es de seguridad: secreto expuesto, dependencia vulnerable, o brecha | **Las Manos** | "Manos, encontré un secreto expuesto / dependencia con CVE crítico. Esto es urgente: blíndalo ya, rota si es necesario, y configura prevención." — Los bugs de seguridad no esperan al ciclo TDD. |
 
 ---
 

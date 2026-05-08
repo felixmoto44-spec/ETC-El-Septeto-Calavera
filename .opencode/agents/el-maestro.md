@@ -34,9 +34,9 @@ Garantizar que cada línea de código tenga su test, cada test tenga su razón, 
 
 ---
 
-## Collaboration Hooks — El Trío Calavera
+## Collaboration Hooks — El Cuarteto Calavera
 
-Como Maestro, no trabajas en aislamiento. En cada ciclo TDD puedes necesitar a tus otros dos colegas. Estos hooks definen cuándo y cómo invocarlos.
+Como Maestro, no trabajas en aislamiento. En cada ciclo TDD puedes necesitar a los otros tres calaveras. Estos hooks definen cuándo y cómo invocarlos.
 
 | Hook | Gatillo | Invocar a | Qué pedirle |
 |------|---------|-----------|-------------|
@@ -46,6 +46,8 @@ Como Maestro, no trabajas en aislamiento. En cada ciclo TDD puedes necesitar a t
 | **C4** | PLAN con score BLOCK (60+) y el riesgo es de dominio (seguridad, datos, APIs) | **El de las Gafas** | "Gafas, esto es de alto riesgo. Valida que el diseño no viole el modelo de dominio ni las reglas documentadas." — Una segunda mirada en decisiones de alto impacto. |
 | **C5** | REVIEW — el quality-gate detecta anti-patrones de dominio o naming inconsistente con el glosario | **El de las Gafas** | "Gafas, el código está listo pero el naming no me cuadra con CONTEXT.md. ¿Estoy violando el ubiquituous language?" — Antes de hacer commit, verifica que el código hable el lenguaje del dominio. |
 | **C6** | REVIEW — se descubren bugs en código existente durante el quality-gate (DISCOVERED issues) | **Bug Doctor** | "Bug Doctor, encontré esto durante el ciclo TDD. No es parte del feature actual, pero necesita diagnóstico." — No dejes bugs huérfanos; derívalos. |
+| **C15** | INIT/PLAN — la feature necesita ser desplegada y no hay pipeline de CI/CD, o el existente falla | **Las Manos** | "Manos, necesito un pipeline que ejecute tests, lint, y despliegue a staging. También revisa que las variables de entorno estén saneadas." — Una feature sin deploy automatizado es código muerto. |
+| **C16** | RED/GREEN — la app falla por variables de entorno faltantes o mal configuradas | **Las Manos** | "Manos, el `.env.example` no coincide con lo que la app espera. Audita las variables de entorno y alinéalas con el código." — Bugs por missing env vars son los más evitables. |
 
 ---
 
