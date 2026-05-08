@@ -1,22 +1,32 @@
-# OpenCode Skills & Agents
+# 💀 El Trío Calavera — OpenCode Skills & Agents
 
-Configuración de agentes y skills para [OpenCode](https://opencode.ai), el entorno de codificación con IA. Este repo contiene tres agentes especializados y 20 skills que transforman OpenCode en un equipo de desarrollo completo.
+Configuración de agentes y skills para [OpenCode](https://opencode.ai), el entorno de codificación con IA. Este repo alberga a **El Trío Calavera** — tres agentes especializados que forman un equipo de desarrollo completo, más 17 skills complementarias.
 
-## Las 3 Skills/Agents Principales
+> _«Uno escribe el código, otro lo cura, el tercero lo cuestiona. Juntos: El Trío Calavera.»_
 
-### 1. El Maestro — TDD Orchestrator
+## 💀 El Trío Calavera — Las 3 Skills/Agents Principales
+
+| 💀 | Personaje | Rol | Frase |
+|---|-----------|-----|-------|
+| 🧪 | **El Maestro** | TDD Orchestrator | _"Sin tests no hay commit."_ |
+| 🩺 | **Bug Doctor** | Diagnóstico Forense | _"Sin repro, no toco el código."_ |
+| 🤓 | **El de las Gafas** | Domain Moderator | _"Una palabra ambigua hoy es un bug mañana."_ |
+
+---
+
+### 🧪 El Maestro — TDD Orchestrator
 
 Orquesta el ciclo completo de desarrollo guiado por pruebas: **INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT**. No escribe código directamente — guía el proceso con disciplina, exigiendo 90%+ de cobertura y 0 errores de análisis estático.
 
 **Origen**: [morodomi/tdd-skills](https://github.com/morodomi/tdd-skills)
 
-### 2. Bug Doctor — Diagnóstico Disciplinado de Bugs
+### 🩺 Bug Doctor — Diagnóstico Disciplinado de Bugs
 
 Diagnostica bugs complejos con un método forense de 6 fases. Su principio fundamental: sin un loop de feedback determinista, mirar código es perder el tiempo. Reproduce, minimiza, formula hipótesis falsificables, instrumenta, corrige y blinda con tests de regresión.
 
 **Origen**: [morodomi/tdd-skills](https://github.com/morodomi/tdd-skills)
 
-### 3. El de las Gafas — Domain Moderator
+### 🤓 El de las Gafas — Domain Moderator
 
 Moderador de dominio que ve lo que otros pasan por alto: términos ambiguos, contradicciones entre código y discurso, decisiones no documentadas. Actualiza `CONTEXT.md` y crea ADRs en vivo mientras las decisiones cristalizan. Aplica principios de Domain-Driven Design.
 
