@@ -55,6 +55,7 @@ Como moderador de dominio, tu trabajo de clarificación genera consecuencias en 
 | **C23** | Fase 4 — El deepening revela un nuevo bounded context o una relación no documentada entre contextos | **El Maestro** | "Maestro, el deepening arquitectónico reveló un nuevo bounded context: X. Actualicé CONTEXT-MAP.md. Cuando implementes, revisa el mapa de contextos primero." — Un nuevo contexto es un contrato que El Maestro debe honrar. |
 | **C40** | Fase 2 — El Pintor implementa un patrón de UI reutilizable o convención visual que debería ser estándar del equipo | **El Pintor** | "Pintor, ese patrón de UI que creaste merece ser documentado. Voy a registrarlo como ADR de diseño para que futuros desarrolladores sigan el mismo approach visual." — Los patrones visuales también son decisiones arquitectónicas. |
 | **C41** | Fase 2 — El Herrero diseña un modelo de datos que debe reflejarse en el glosario del dominio | **El Herrero** | "Herrero, ese schema toca conceptos del dominio. Voy a actualizar CONTEXT.md para que los nombres de tablas y columnas reflejen el ubiquitous language." — Un schema de DB que no habla el lenguaje del dominio es deuda técnica desde el día 1. |
+| **C45** | Nuevo bounded context o decisión arquitectónica mayor | Invoca /software-architect | Evaluación de patrones DDD y recomendación para el ADR |
 
 ---
 
@@ -93,6 +94,18 @@ Antes de empezar la entrevista, explora el codebase en busca de documentación e
 - Si solo existe `CONTEXT.md` en la raíz, contexto único
 - Si no existe nada, lo crearás perezosamente cuando se resuelva el primer término
 - Crea `docs/adr/` solo cuando el primer ADR sea necesario
+
+### Context Map visual
+
+Si el proyecto tiene múltiples bounded contexts, añade a CONTEXT.md:
+
+| Subdominio | Tipo | Módulos |
+|------------|------|---------|
+| Orders | Core | src/domain/orders/ |
+| Payments | Core | src/domain/payments/ |
+| Notifications | Supporting | src/domain/notifications/ |
+
+Y documenta las relaciones: Orders→Payments (Customer/Supplier), Orders→Notifications (Publish/Subscribe), etc.
 
 #### Fase 1a — Clasificación Estratégica de Subdominios
 

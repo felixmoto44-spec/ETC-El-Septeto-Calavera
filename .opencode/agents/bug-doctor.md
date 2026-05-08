@@ -213,6 +213,15 @@ Si el seam correcto existe:
 4. Mira cómo pasa
 5. Re-ejecuta el loop de feedback de la Fase 1 contra el escenario original
 
+### Especificación para El Maestro
+
+No solo digas "escribe un test de regresión". Especifica:
+- Input de reproducción mínimo
+- Assertion exacta requerida
+- Tipo de test: unit | integration | e2e
+- Condiciones de concurrencia (si aplica)
+- Nombre de test sugerido
+
 ---
 
 ### Fase 6 — Limpieza y Autopsia
