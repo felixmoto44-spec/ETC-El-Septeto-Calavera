@@ -45,7 +45,7 @@ Incluye un **Modo Integración de APIs** para configurar servicios externos (Sup
 
 ## 🤝 Colaboración entre Agentes
 
-Los 4 agentes de ETC no trabajan en aislamiento — se invocan entre sí automáticamente según el contexto. Hay **20 hooks de colaboración** (C1–C20) documentados en sus instrucciones, y cada agente integra internamente la lógica de sus especialidades.
+Los 4 agentes de ETC no trabajan en aislamiento — se invocan entre sí automáticamente según el contexto. Hay **23 hooks de colaboración** (C1–C23) documentados en sus instrucciones, y cada agente integra internamente la lógica de sus especialidades.
 
 > _«El Maestro implementa, Bug Doctor diagnostica, El de las Gafas clarifica, Las Manos despliega. El que calla una duda al compañero, la paga con un bug.»_
 
@@ -60,7 +60,7 @@ Cada agente tiene un rol primario claro, y cuando detecta que está fuera de su 
 | 🤓 **El de las Gafas** | Clarificar ubiquitous language y documentación | 🧪 Maestro (blindar con tests), 🩺 Bug Doctor (bugs por ambigüedad), 🖐️ Manos (infra/secretos) |
 | 🖐️ **Las Manos** | Infraestructura, CI/CD, secretos, dependencias, incidentes, worktrees, auditoría de skills | 🧪 Maestro (deploy feature), 🩺 Bug Doctor (incidentes), 🤓 Gafas (ADR operacionales) |
 
-### Los 20 hooks de colaboración (C1–C20)
+### Los 23 hooks de colaboración (C1–C23)
 
 #### Hooks C1–C14: El Trío Original (Maestro ↔ Bug Doctor ↔ Gafas)
 
@@ -92,6 +92,14 @@ Cada agente tiene un rol primario claro, y cuando detecta que está fuera de su 
 | C19 | 🤓 Gafas | ADR necesita restricciones de infra | 🖐️ Manos | Contexto operacional para el ADR |
 | C20 | 🤓 Gafas | Secretos en documentación de dominio | 🖐️ Manos | Limpieza + prevención de leaks |
 
+#### Hooks C21–C23: Gafas profundiza la arquitectura
+
+| # | Inicia | Gatillo | Invoca a | Resultado |
+|---|--------|---------|----------|-----------|
+| C21 | 🤓 Gafas | Subdominio Core sin tests ni inversión | 🧪 Maestro | Ciclo de deepening con TDD |
+| C22 | 🤓 Gafas | Módulo shallow con bugs frecuentes | 🩺 Bug Doctor | Diagnóstico en paralelo |
+| C23 | 🤓 Gafas | Nuevo bounded context descubierto | 🧪 Maestro | Mapa de contextos actualizado |
+
 ### Lógica especializada absorbida
 
 Cada agente principal integra la lógica de sus especialidades sin necesidad de sub-agentes:
@@ -101,7 +109,7 @@ Cada agente principal integra la lógica de sus especialidades sin necesidad de 
 | 🤓 **El de las Gafas** | ddd-strategic-design (subdominios), ddd-context-mapping (patrones bounded context), improve-codebase-architecture (deepening) |
 | 🖐️ **Las Manos** | senior-devops (CI/CD, Docker, IaC), dependency-auditor (CVEs, licencias), env-secrets-manager (.env, leaks), incident-commander (SEV-0→3), git-worktree-manager, skill-security-auditor, git-guardrails, setup-pre-commit |
 
-### Ciclos compuestos — cuando los 20 hooks se encadenan
+### Ciclos compuestos — cuando los 23 hooks se encadenan
 
 #### 🐛🔍 "Bug revela deuda de dominio" (C7→C11→C10→C14)
 
@@ -327,7 +335,7 @@ Primera release estable del Cuarteto Calavera:
 - 🩺 **Bug Doctor** — Diagnóstico forense de 6 fases con principio de repro determinista
 - 🤓 **El de las Gafas** — Domain Moderator con DDD, context mapping, y deepening arquitectónico
 - 🖐️ **Las Manos** — Infrastructure & Ops con CI/CD, secretos, dependencias, incidentes y Modo Integración de APIs
-- **20 hooks de colaboración** (C1–C20) entre los 4 agentes
+- **23 hooks de colaboración** (C1–C23) entre los 4 agentes
 - **11 reglas de delegación obligatoria** — checkpoints estrictos que garantizan calidad
 - **32 skills** en `.opencode/skills/` (4 de agentes + 28 complementarias)
 - **Modo Integración de APIs** en Las Manos: Supabase, Google OAuth, Stripe, GitHub, AWS
