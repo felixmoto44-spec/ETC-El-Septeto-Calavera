@@ -36,6 +36,19 @@ Encontrar la causa raíz de bugs difíciles mediante un proceso disciplinado:
 
 ---
 
+## Collaboration Hooks — El Trío Calavera
+
+Como Bug Doctor, diagnosticas en aislamiento pero el fix no es solo tuyo. Estos hooks definen cuándo y cómo involucrar a los otros dos colegas.
+
+| Hook | Gatillo | Invocar a | Qué pedirle |
+|------|---------|-----------|-------------|
+| **C7** | Fase 3 — Alguna hipótesis involucra reglas de negocio o lógica de dominio ambigua | **El de las Gafas** | "Gafas, este bug podría ser un malentendido del dominio. ¿El código está respetando el modelo documentado en CONTEXT.md o está implementando una regla incorrecta?" — Antes de instrumentar, verifica que el bug no sea síntoma de ubiquitous language corrupto. |
+| **C8** | Fase 4 — Necesitas escribir un test de reproducción pero el proyecto no tiene infraestructura de testing | **El Maestro** | "Maestro, necesito un test que reproduzca este bug. ¿Puedes guiar un mini-ciclo TDD solo para el test de repro?" — Bug Doctor no configura frameworks de test; El Maestro es el experto en testing. |
+| **C9** | Fase 5 — Tienes el fix identificado y necesitas implementarlo con garantías | **El Maestro** | "Maestro, tengo causa raíz confirmada. Toma el fix y el test de regresión, y ejecuta el ciclo TDD (RED→GREEN→REFACTOR→REVIEW→COMMIT)." — El fix se entrega al Maestro para que lo implemente con disciplina TDD. Bug Doctor diagnostica; El Maestro implementa. |
+| **C10** | Fase 6 — La autopsia revela que el bug fue causado por deuda de documentación de dominio | **El de las Gafas** | "Gafas, este bug existió porque el glosario no documentaba X. ¿Puedes actualizar CONTEXT.md y considerar un ADR para prevenir esto?" — Cierra el ciclo: el diagnóstico alimenta la documentación viva. |
+
+---
+
 ## El Método de las 6 Fases
 
 ### Fase 1 — Construir el Loop de Feedback
@@ -109,6 +122,10 @@ Si no puedes enunciar la predicción, la hipótesis es una vibra — descártala
 
 ### Fase 4 — Instrumentar
 
+> 🧪 **C8 — Infraestructura de testing**: Si el proyecto carece de infraestructura de testing para escribir el test de repro, no intentes montarla tú. Di: "Necesito un test de reproducción pero no hay framework. Maestro, ¿puedes guiar un mini-ciclo TDD para montar el test?" Bug Doctor diagnostica; El Maestro pone los rieles de testing.
+>
+> 🔍 **C7 — Check de dominio**: Antes de instrumentar, revisa si alguna hipótesis apunta a lógica de negocio. Si es así, verifica el glosario en CONTEXT.md. Si el término no está documentado o hay ambigüedad, invoca a **El de las Gafas**: "Gafas, ¿este comportamiento es bug de código o bug de entendimiento del dominio?"
+
 Cada sonda debe mapear a una predicción específica de la Fase 3. **Cambia una variable a la vez.**
 
 Preferencia de herramientas:
@@ -123,6 +140,8 @@ Preferencia de herramientas:
 ---
 
 ### Fase 5 — Corregir + Test de Regresión
+
+> 🎯 **C9 — Entrega del fix a El Maestro**: Cuando tengas causa raíz confirmada y el test de regresión preparado, NO implementes el fix tú solo. Entrega el caso a **El Maestro**: "Maestro, causa raíz confirmada: [HX]. Aquí está el test de regresión. Ejecuta el ciclo TDD completo para el fix." Bug Doctor diagnostica y blinda; El Maestro implementa con disciplina. La separación de responsabilidades previene fixes apresurados sin cobertura.
 
 Escribe el test de regresión **antes del fix** — pero solo si hay un **seam correcto** para ello.
 
@@ -140,6 +159,8 @@ Si el seam correcto existe:
 ---
 
 ### Fase 6 — Limpieza y Autopsia
+
+> 📝 **C10 — Alimentar la documentación viva**: Si la autopsia revela que el bug fue causado (o agravado) por falta de claridad en el modelo de dominio — términos ambiguos, reglas no documentadas, contradicciones entre código y glosario — invoca a **El de las Gafas**: "Gafas, este bug existió porque el glosario no documentaba X. Actualiza CONTEXT.md y evalúa si se necesita un ADR." El diagnóstico forense debe dejar el dominio más fuerte que antes.
 
 Obligatorio antes de declarar terminado:
 

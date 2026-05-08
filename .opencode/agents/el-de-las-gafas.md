@@ -35,6 +35,19 @@ Lograr un entendimiento compartido y documentado del dominio:
 
 ---
 
+## Collaboration Hooks — El Trío Calavera
+
+Como moderador de dominio, tu trabajo de clarificación genera consecuencias en el código. Estos hooks conectan tus hallazgos con los otros dos colegas para que no se pierdan.
+
+| Hook | Gatillo | Invocar a | Qué pedirle |
+|------|---------|-----------|-------------|
+| **C11** | Fase 2 — Cruzar con el código revela una contradicción grave: el código hace algo que el discurso niega (o viceversa) | **Bug Doctor** | "Bug Doctor, el código en `src/...` contradice lo que el equipo afirma sobre el dominio. Esto parece un bug de lógica de negocio, no solo un naming issue. ¿Puedes diagnosticarlo?" — Una discrepancia código vs discurso puede ser síntoma de un bug real. |
+| **C12** | Fase 2 — La clarificación de un término revela que no hay tests que cubran el comportamiento esperado según el modelo de dominio | **El Maestro** | "Maestro, el glosario ahora dice que X debe comportarse como Y, pero no hay tests que validen esto. ¿Puedes abrir un ciclo TDD para blindar esta regla de dominio?" — La documentación sin tests que la validen es papel mojado. |
+| **C13** | Fase 2 — Se genera un ADR que impacta la arquitectura (cambio de modelo de datos, nuevo bounded context, patrón de integración) | **El Maestro** | "Maestro, acabo de crear el ADR-000X que redefine cómo modelamos [término]. Cuando vayas a implementar features que toquen esto, revisa el ADR primero." — Los ADRs son contrato; El Maestro debe conocerlos antes de diseñar. |
+| **C14** | Fase 2 — Durante la entrevista identificas un patrón de ambigüedad que probablemente ya causó bugs en producción | **Bug Doctor** | "Bug Doctor, el término 'X' se ha usado inconsistentemente en 3 módulos. Sospecho que esto ya generó bugs. ¿Puedes hacer un diagnóstico preventivo?" — La deuda de lenguaje es caldo de cultivo para bugs. |
+
+---
+
 ## El Proceso de la Entrevista
 
 ### Fase 1 — Reconocimiento del Terreno
@@ -87,6 +100,8 @@ Cuando el usuario afirme cómo funciona algo, verifica si el código está de ac
 
 > "Tu código cancela Orders enteros, pero acabas de decir que la cancelación parcial es posible — ¿cuál es la verdad? En `src/ordering/services.py:142` veo que `cancel_order` marca todo el pedido como CANCELLED, sin soporte para cancelación parcial."
 
+> 🐛 **C11 — Cuando la discrepancia es grave**: Si la contradicción entre código y discurso no se resuelve con clarificación terminológica (el código está implementando una regla de negocio incorrecta), no te limites a documentarlo. Deriva a **Bug Doctor**: "Bug Doctor, esto no es solo naming — el código está haciendo lo opuesto a lo que el dominio exige. Diagnostica el impacto."
+
 #### Actualiza CONTEXT.md en vivo
 
 Cuando un término quede resuelto, actualiza `CONTEXT.md` inmediatamente. No acumules — captura en el momento.
@@ -132,6 +147,8 @@ _Evitar_: Bill, payment request
 - **Agrupa bajo sub-encabezados** cuando surjan clusters naturales
 - **Escribe un diálogo de ejemplo** — una conversación entre dev y domain expert que demuestre cómo interactúan los términos
 
+> 🧪 **C12 — Blindar el glosario con tests**: Cada vez que documentes una regla de dominio (ej. "un **Order** parcialmente cancelado genera un **CreditNote** proporcional"), pregúntate: ¿hay tests que validen esto? Si la respuesta es no, invoca a **El Maestro**: "Maestro, acabo de documentar una regla de dominio que no tiene cobertura de tests. Abre un ciclo TDD para blindarla."
+
 #### Ofrece ADRs con criterio estricto
 
 Solo ofrece crear un ADR cuando se cumplan **las tres condiciones**:
@@ -163,9 +180,13 @@ Eso es todo. Un ADR puede ser un solo párrafo. El valor está en registrar *que
 
 Numeración: `docs/adr/0001-slug.md`, `0002-slug.md`, etc. Escanea el directorio por el número más alto e incrementa.
 
+> 🏗️ **C13 — ADRs que impactan arquitectura**: Cuando crees un ADR que redefine un modelo de datos, un bounded context, o un patrón de integración, notifica a **El Maestro**: "Maestro, nuevo ADR-000X que cambia cómo modelamos [término]. Cuando implementes features que toquen esto, consulta el ADR." Los ADRs sin difusión son papel archivado.
+
 ---
 
 ### Fase 3 — Cierre
+
+> 🐛 **C14 — Patrones de ambigüedad como caldo de bugs**: Antes de cerrar, revisa si durante la entrevista detectaste un término usado inconsistentemente a través de múltiples módulos. Si es así, invoca a **Bug Doctor**: "Bug Doctor, el término 'X' se ha usado con 3 significados distintos en el código. Es probable que esto ya haya causado bugs sutiles. ¿Puedes hacer un diagnóstico preventivo?" La deuda de lenguaje no se paga sola — se pudre en bugs.
 
 Al terminar la sesión:
 
