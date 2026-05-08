@@ -311,6 +311,24 @@ Cuando necesitas diseñar una API completa:
 5. **Genera el schema**: OpenAPI 3.1 para REST, SDL para GraphQL, tipos de Zod para tRPC
 6. **Valida contra el dominio**: Si hay contexto de negocio, verifica contra `CONTEXT.md`
 
+### Política de versionado
+
+**Estrategia:** URL versioning (api/v1, api/v2).
+
+**Requiere nueva versión SOLO para breaking changes:**
+- Eliminar campo del response
+- Cambiar tipo de un campo
+- Cambiar comportamiento de endpoint existente
+
+**No requiere nueva versión (backward-compatible):**
+- Añadir campo opcional
+- Añadir endpoint nuevo
+- Añadir query param opcional
+
+**Ciclo de vida:** CURRENT (6+ meses) → DEPRECATED (anuncio con 3 meses) → SUNSET (eliminación).
+
+Usar headers: Deprecation: true, Sunset: <fecha>, Link: <successor-version>.
+
 ### Modo Database — Schema Design y Migraciones
 
 Cuando necesitas diseñar o modificar un schema:
@@ -342,6 +360,16 @@ Solo cuando el código ya no usa la columna vieja, eliminarla.
 - [ ] Manos tiene el plan de rollback
 - [ ] Bug Doctor disponible durante la ventana de migración
 
+### Connection pooling
+
+Configuración de pool antes de producción:
+- **Servidor tradicional (1 instancia):** max 20, min 5, idleTimeout 30s, connectionTimeout 5s
+- **Serverless/Vercel (muchas instancias):** max 3, min 1, idleTimeout 10s
+
+Para Supabase: usar URL de transacción (PgBouncer, puerto 6543) para la app. URL directa (puerto 5432) solo para migraciones.
+
+Health check periódico del pool. Monitorizar con métricas de pool (total, idle, waiting).
+
 ### Modo Auth — Implementar Autenticación y Autorización
 
 Cuando necesitas implementar auth:
@@ -351,6 +379,16 @@ Cuando necesitas implementar auth:
 3. **Configura middleware**: Extraer claims del token, verificar firma y expiración, inyectar `req.user`
 4. **Autorización**: RBAC base, extender a ABAC según complejidad
 5. **Pruebas de seguridad**: Token expirado → 401. Token sin scope → 403. Token manipulado → 401
+
+### Refresh token rotation con reuse detection
+
+Implementa refresh token rotation:
+1. Al hacer refresh: marcar token actual como usado, generar nuevo token en misma familia
+2. REUSE DETECTION: si un token ya usado se reusa → invalidar toda la familia de tokens y forzar re-login (posible ataque)
+3. Tokens en familias con versionado incremental
+4. Expiración: 30 días para refresh tokens
+
+Esto previene ataques de replay de refresh tokens.
 
 ### Modo Arquitectura — Evaluar y Aplicar Patrones
 
@@ -372,6 +410,14 @@ Cuando la arquitectura objetivo es serverless:
 5. **Streaming**: Para respuestas largas, usa streaming (AI responses, exports)
 
 ### Modo Seguridad — Auditoría OWASP y Hardening
+
+### Circuit breaker para dependencias externas
+
+Para toda integración con servicios externos (Stripe, Google, etc.), implementa circuit breaker:
+
+Estados: CLOSED → OPEN (tras 5 fallos) → HALF_OPEN (tras 60s timeout) → CLOSED (tras 2 éxitos).
+
+El Herrero registra métricas de estado del circuit breaker para que Bug Doctor pueda diagnosticar outages de terceros.
 
 Cuando necesitas auditar o blindar una API:
 
