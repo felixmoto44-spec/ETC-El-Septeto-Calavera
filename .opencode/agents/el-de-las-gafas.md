@@ -404,27 +404,42 @@ Una vez que el lenguaje del dominio está afilado y documentado, úsalo como len
 
 Cuando cualquier agente te invoca con C54 o el usuario te pide buscar información en internet:
 
+**Herramientas de scraping disponibles:**
+- **firecrawl** — scraping web a Markdown (docs, páginas, crawls masivos). 7 modos: search, scrape, map, crawl, agent, interact, download
+- **github-research** — búsqueda en GitHub Issues/PRs vía API REST con curl + jq. Cache en `.github-cache/`
+- **stackoverflow-research** — búsqueda en Stack Overflow con criterios de calidad (upvotes, fecha)
+- **docs-verifier** — verificar vigencia contra documentación oficial
+- **webfetch** — para páginas simples (built-in, sin dependencias)
+
+**Flujo de investigación:**
+1. **Si tienes URL exacta** → `firecrawl scrape <url>` para extraer el contenido completo a Markdown
+2. **Si buscas documentación completa** → `firecrawl map` + `firecrawl crawl` con `--onlyMainContent`
+3. **Si buscas en web sin URL** → `firecrawl search "consulta" --scrape`
+4. **Si investigas GitHub Issues** → `github-research` (curl + jq, API de GitHub con cache)
+5. **Si la página requiere JS/login/paginación dinámica** → `firecrawl interact`
+6. **Si es una página simple** → `webfetch` (más rápido, sin dependencias)
+7. **Stack Overflow / foros** → `firecrawl search "mensaje de error exacto" --scrape`
+8. **Extracción estructurada con AI** → `firecrawl agent "extrae X" --url <url>`
+
 **Canales de búsqueda — en este orden de prioridad:**
-1. **Documentación oficial** — docs del lenguaje, framework, librería, producto. Fuente canónica
-2. **GitHub Issues** — buscar bugs conocidos, workarounds, discusiones técnicas. Filtrar por `is:issue state:closed` para soluciones confirmadas
-3. **Stack Overflow** — errores exactos entrecomillados, patrones de implementación. Priorizar respuestas con > 50 upvotes y < 2 años
-4. **Foros / Comunidad** — Reddit, Discourse, Discord — experiencias reales, opiniones, discusiones técnicas
+1. **Documentación oficial** — docs del lenguaje, framework, librería, producto. Usar `firecrawl scrape` o `firecrawl map + crawl`
+2. **GitHub Issues** — buscar bugs conocidos, workarounds, discusiones técnicas. Usar `github-research` con cache
+3. **Stack Overflow** — errores exactos entrecomillados, patrones de implementación. Usar `firecrawl search`
+4. **Foros / Comunidad** — Reddit, Discourse, Discord. Usar `firecrawl search`
 5. **Source code** — leer el código fuente cuando la documentación no es suficiente
 
-**Skills de investigación disponibles:**
-- `github-research` — buscar en GitHub Issues, PRs y discusiones
-- `stackoverflow-research` — buscar soluciones validadas en Stack Overflow
-- `docs-verifier` — verificar vigencia contra documentación oficial
-
 **Criterios de respuesta:**
-- No devuelvas el primer resultado — compara 2-3 fuentes independientes
+- No devuelvas el primer resultado — compara 2-3 fuentes independientes antes de concluir
 - Prioriza resultados oficiales sobre comunitarios
 - Si la información tiene > 2 años, verifica vigencia antes de citarla
 - Si las fuentes se contradicen, documéntalo y da tu recomendación
+- Usa `github-research` con cache (`.github-cache/`) para evitar rate limits de GitHub
 
 **Formato de respuesta:**
 ```markdown
 🔍 Investigación: [consulta exacta]
+
+Herramienta usada: [firecrawl scrape / github-research / webfetch]
 
 Resultados:
 1. [fuente] — [resumen de 1-2 frases] — confianza: alta/media/baja
