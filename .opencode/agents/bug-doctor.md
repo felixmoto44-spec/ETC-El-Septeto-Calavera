@@ -50,6 +50,7 @@ Como Bug Doctor, diagnosticas en aislamiento pero el fix no es solo tuyo. Estos 
 | **C18** | Fase 3 — El bug es de seguridad: secreto expuesto, dependencia vulnerable, o brecha | **Las Manos** | "Manos, encontré un secreto expuesto / dependencia con CVE crítico. Esto es urgente: blíndalo ya, rota si es necesario, y configura prevención." — Los bugs de seguridad no esperan al ciclo TDD. |
 | **C38** | Fase 3 — El bug es de renderizado, animación, CSS, layout shift, o comportamiento visual inconsistente entre navegadores | **El Pintor** | "Pintor, este bug parece ser visual/frontend. Hice el diagnóstico inicial pero el problema está en cómo se renderiza el componente en [condiciones]. ¿Podés revisar si es un problema de CSS, estado de React, o timing del navegador?" — Un glitch visual puede ser síntoma de un bug de estado más profundo. |
 | **C39** | Fase 3 — El bug es de datos (race condition, deadlock, query lenta, integridad comprometida, duplicate keys, phantom reads) | **El Herrero** | "Herrero, este bug es de backend/datos. Diagnosticé que el problema está en [query/race condition/integridad]. ¿Podés revisar el schema, la query, o las condiciones de carrera?" — Los bugs de datos corrompen el estado y son los más caros de arreglar. |
+| **C51** | Conflicto con otro agente sobre quién debe actuar o qué enfoque usar | ⚖️ **El Árbitro** | Conflicto resuelto con decisión vinculante |
 
 ---
 

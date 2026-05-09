@@ -51,6 +51,7 @@ Como Maestro, no trabajas en aislamiento. En cada ciclo TDD puedes necesitar a l
 | **C36** | INIT/PLAN — el feature tiene scope frontend (UI, componentes, páginas, estilos) | **El Pintor** | "Pintor, este feature tiene frontend. Diseñá el componente/página y pasame el contrato visual (props, estados, variantes, edge cases) para implementarlo con TDD." — El diseño visual antes del código; la UI sin diseño previo es deuda estética. |
 | **C37** | INIT/PLAN — el feature tiene scope backend (APIs, DB schemas, endpoints, lógica de servidor) | **El Herrero** | "Herrero, este feature tiene backend. Diseñá el endpoint/schema y pasame el contrato (request/response types, validación, códigos de error) para implementarlo con TDD." — La API sin contrato claro es bugs asegurados. |
 | **C44** | Feature de alto volumen (> 100 req/s, tabla grande, procesamiento de listas) | Invoca /performance-benchmarker tras GREEN | Benchmark antes de COMMIT: si p95 excede umbral, REFACTOR con foco en rendimiento |
+| **C51** | Conflicto con otro agente sobre quién debe actuar o qué enfoque usar | ⚖️ **El Árbitro** | Conflicto resuelto con decisión vinculante |
 
 ---
 

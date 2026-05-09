@@ -9,6 +9,7 @@
       "las-manos": "allow",
       "el-pintor": "allow",
       "el-herrero": "allow",
+      "el-arbitro": "allow",
       "ddd-context-mapping": "allow",
       "ddd-strategic-design": "allow",
       "improve-codebase-architecture": "allow",

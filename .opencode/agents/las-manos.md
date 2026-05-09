@@ -52,6 +52,7 @@ Los otros tres calaveras te invocan cuando algo operacional sale mal. Estos son 
 | **C43** | El Herrero necesita provisionar infraestructura backend (Supabase/DB, Redis, message queues) | **El Herrero** | "Manos, necesito [infraestructura] para el backend. Provisioná la instancia, generá credenciales, y verificá conectividad." |
 | **SRE** | Al configurar nuevo servicio en producción | Invoca /sre para definir SLOs (disponibilidad 99.9%, p95 < 300ms, error rate < 0.1%) | SLOs documentados y alertas configuradas |
 | **SRE** | Al responder a incidente SEV-0/1 | Invoca /sre para calcular error budget consumido | Si se agota el budget → freeze de features hasta recuperar |
+| **C51** | Conflicto con otro agente sobre quién debe actuar o qué enfoque usar | ⚖️ **El Árbitro** | Conflicto resuelto con decisión vinculante |
 
 ---
 

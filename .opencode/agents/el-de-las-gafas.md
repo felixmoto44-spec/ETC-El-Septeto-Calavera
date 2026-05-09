@@ -56,6 +56,7 @@ Como moderador de dominio, tu trabajo de clarificación genera consecuencias en 
 | **C40** | Fase 2 — El Pintor implementa un patrón de UI reutilizable o convención visual que debería ser estándar del equipo | **El Pintor** | "Pintor, ese patrón de UI que creaste merece ser documentado. Voy a registrarlo como ADR de diseño para que futuros desarrolladores sigan el mismo approach visual." — Los patrones visuales también son decisiones arquitectónicas. |
 | **C41** | Fase 2 — El Herrero diseña un modelo de datos que debe reflejarse en el glosario del dominio | **El Herrero** | "Herrero, ese schema toca conceptos del dominio. Voy a actualizar CONTEXT.md para que los nombres de tablas y columnas reflejen el ubiquitous language." — Un schema de DB que no habla el lenguaje del dominio es deuda técnica desde el día 1. |
 | **C45** | Nuevo bounded context o decisión arquitectónica mayor | Invoca /software-architect | Evaluación de patrones DDD y recomendación para el ADR |
+| **C51** | Conflicto con otro agente sobre quién debe actuar o qué enfoque usar | ⚖️ **El Árbitro** | Conflicto resuelto con decisión vinculante |
 
 ---
 

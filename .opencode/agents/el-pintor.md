@@ -48,6 +48,7 @@ Como Pintor, tu arte visual genera necesidades técnicas que otros calaveras deb
 | **C27** | Encuentras un bug de renderizado, animación, layout shift, o comportamiento visual inconsistente entre navegadores | **Bug Doctor** | "Bug Doctor, encontré un bug visual: [descripción]. El componente se renderiza mal en [condiciones]. ¿Puedes diagnosticar si es un problema de CSS, de estado de React, o de timing del navegador?" — Un glitch visual puede ser síntoma de un problema más profundo. |
 | **C28** | Necesitas un endpoint de API específico (forma de los datos, campos, errores) para completar una UI | **El Herrero** | "Herrero, necesito un endpoint que devuelva [estructura de datos] para mi componente [nombre]. Aquí está el contrato de datos que necesito desde el frontend." — Una UI sin datos es un cascarón vacío. |
 | **C29** | Antes de implementar UI que toca conceptos del dominio (ej: pantalla de Pricing, billing settings, dashboard de órdenes) | **El de las Gafas** | "Gafas, voy a construir la UI para [feature de dominio]. ¿Hay conceptos en CONTEXT.md que deba visualizar correctamente? No quiero que el botón diga 'Comprar' cuando el dominio dice 'Reservar'." — Una UI que usa el lenguaje equivocado confunde al usuario y corrompe el ubiquitous language. |
+| **C51** | Conflicto con otro agente sobre quién debe actuar o qué enfoque usar | ⚖️ **El Árbitro** | Conflicto resuelto con decisión vinculante |
 
 ---
 

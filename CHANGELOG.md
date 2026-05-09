@@ -1,6 +1,31 @@
-# Changelog — ETC: El Sexteto Calavera
+# Changelog — ETC: El Septeto Calavera
 
 Todos los cambios notables se documentan en este fichero.
+
+---
+
+## [2.1.0] — 2026-05-09 — El Árbitro
+
+### Agente nuevo
+- ⚖️ **El Árbitro** — Conflict Resolution Agent. Resuelve disputas entre agentes aplicando el protocolo de conflictos.
+
+### Hooks nuevos
+- **C44:** performance benchmarking (El Maestro)
+- **C51–C53:** arbitraje de conflictos y documentación de precedentes
+- **Total: 53 hooks** (C1–C53)
+
+### Nuevas skills
+- `el-arbitro/SKILL.md`
+- **Total: 35 skills** (7 de agentes + 28 complementarias)
+
+### Modificado
+- Los 6 agentes existentes ahora invocan a El Árbitro (C51) ante conflictos
+- README.md: El Sexteto → El Septeto Calavera (7 agentes, 35 skills, 53 hooks, 29 reglas)
+- `docs/conflict-resolution.md`: añadida referencia a El Árbitro como implementador del protocolo
+
+### Infraestructura
+- `opencode.json` con allowlist actualizada (+ `el-arbitro`)
+- Agente y skill sincronizados a `~/.config/opencode/`
 
 ---
 

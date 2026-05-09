@@ -1,5 +1,7 @@
 # Protocolo de resolución de conflictos entre agentes
 
+> **Implementado por ⚖️ El Árbitro**, el séptimo agente de ETC. Ante cualquier conflicto, los agentes invocan a El Árbitro (hook C51) quien aplica este protocolo para resolver disputas con decisión vinculante.
+
 ## Principio fundamental
 
 Cada agente tiene soberanía en su dominio. Los conflictos ocurren cuando dos dominios se solapan. Este documento define quién tiene la última palabra en cada tipo de conflicto.
@@ -55,7 +57,13 @@ Cada agente tiene soberanía en su dominio. Los conflictos ocurren cuando dos do
 
 ## Protocolo de escalación
 
-Si un conflicto no encaja en los casos anteriores:
+Si un conflicto no encaja en los casos anteriores, **El Árbitro** aplica su protocolo de arbitraje (Fase 1-3):
+
+1. **Recibir el conflicto** (hook C51 o C52) — Parte A, Parte B, contexto
+2. **Clasificar**: Solapamiento de dominio, Desacuerdo técnico, Ambigüedad de responsabilidad, Bloqueo por dependencia, Estancamiento, o Conflicto de prioridades
+3. **Resolver**: Aplicar tabla de soberanía si está cubierto; aplicar criterio si no; escalar al usuario solo si es irresoluble
+
+Si El Árbitro no está disponible (conflicto de él contra otro agente):
 
 1. **Parar:** ningún agente implementa nada mientras el conflicto no esté resuelto
 2. **Documentar:** el agente que detecta el conflicto lo documenta en el chat

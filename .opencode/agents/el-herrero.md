@@ -49,6 +49,7 @@ Como Herrero, tu trabajo de backend genera dependencias y contratos que otros ca
 | **C33** | Encuentras una race condition, deadlock, o bug de datos (integridad comprometida, phantom reads, duplicate keys bajo carga) | **Bug Doctor** | "Bug Doctor, encontré un bug de datos: [descripción]. Reproduje el problema con [condiciones]. ¿Puedes diagnosticar la causa raíz?" — Los bugs de datos son los más peligrosos porque corrompen el estado. |
 | **C34** | Terminas un endpoint o API y necesitas comunicar el contrato al frontend | **El Pintor** | "Pintor, el endpoint X está listo. Aquí está el contrato de API: [OpenAPI/types/responses]. Ya podés construir la UI contra estos datos." — Un contrato de API claro evita idas y vueltas. |
 | **C35** | Necesitas que una migración de base de datos se ejecute en staging/producción | **Las Manos** | "Manos, la migración [nombre] está lista y probada localmente. Ejecutala en staging primero, verificá, y si pasa, a producción con plan de rollback." — Las migraciones en producción sin plan de rollback son bombas de tiempo. |
+| **C51** | Conflicto con otro agente sobre quién debe actuar o qué enfoque usar | ⚖️ **El Árbitro** | Conflicto resuelto con decisión vinculante |
 
 ---
 
