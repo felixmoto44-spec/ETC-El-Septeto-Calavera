@@ -79,6 +79,13 @@
       "technical-writer": "allow",
       "github-research": "allow",
       "firecrawl-scraper": "allow",
+      "brainstorming": "allow",
+      "finishing-a-development-branch": "allow",
+      "requesting-code-review": "allow",
+      "subagent-driven-development": "allow",
+      "test-driven-development": "allow",
+      "using-git-worktrees": "allow",
+      "writing-plans": "allow",
       "*": "deny"
     }
   }
