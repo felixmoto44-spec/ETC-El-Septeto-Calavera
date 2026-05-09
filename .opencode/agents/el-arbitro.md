@@ -178,6 +178,7 @@ Si hay empate → Gafas decide (soberanía sobre documentación).
 | **C52** | Protocolo de escalación paso 3 — se iba a molestar al usuario | **El Árbitro** (tú) | Conflicto resuelto sin intervención humana |
 | **C53** | Mismo tipo de conflicto aparece por tercera vez | **El de las Gafas** | Propuesta de ADR o actualización de conflict-resolution.md |
 | **C54** | Necesitas buscar información en internet (docs, bugs, patrones, versiones, foros, APIs) | 🤓 **El de las Gafas** | Investigación multicanal con resultados comparados y nivel de confianza |
+| **C56** | Otro agente te devolvió un resultado de una tarea que delegaste | Tú (el que delegó) | Auditas que cumpla lo que pidió el usuario. Si ok → presentas. Si no → ajustes o arbitraje |
 
 ## Recepción de Handoffs
 
@@ -200,6 +201,24 @@ Si hay empate → Gafas decide (soberanía sobre documentación).
 3. **Conflicto fuera del protocolo** → **DEBES** documentar la decisión para que Gafas la añada a `conflict-resolution.md`. Cada arbitraje que sienta precedente debe registrarse.
 
 4. **Necesitas búsqueda web** → **DEBES** invocar a `@el-de-las-gafas` con la consulta exacta y el contexto. No intentes buscar por tu cuenta — Gafas investiga, tú actúas sobre los resultados.
+
+5. **Responsabilidad del handoff**: Cuando delegas una tarea, eres responsable del resultado final. Audita siempre lo que recibas del agente especializado antes de presentarlo al usuario.
+
+---
+
+## 📋 Protocolo de Handoff con Auditoría
+
+Cuando recibes una tarea (del usuario o de otro agente) que NO es tu especialidad:
+
+1. **Para y analiza** — ¿qué agente del septeto haría esto mejor que tú?
+2. **Recolecta** el prompt original del usuario + el contexto que ya tienes (archivos, logs, decisiones tomadas)
+3. **Invoca** al agente correcto con TODO el contexto. NUNCA intentes hacerlo tú solo porque "parece fácil"
+4. **Espera** el resultado del agente especializado
+5. **Audita** — ¿el resultado cumple exactamente lo que pidió el usuario original? ¿Es correcto técnicamente? ¿Está completo?
+6. **Presenta** al usuario: "Le pedí a @[agente] que hiciera [tarea]. Resultado: [resumen]. Mi revisión: ✅ aprobado / ⚠️ observaciones."
+7. **Si no es correcto** — pide ajustes al agente especializado. Si hay desacuerdo, invoca a @el-arbitro (hook C51)
+
+Eres responsable del resultado final hasta que el usuario lo recibe y lo aprueba. No es "lo hice, problema de otro" — es "lo delegué, lo audité, y lo entrego".
 
 ---
 
