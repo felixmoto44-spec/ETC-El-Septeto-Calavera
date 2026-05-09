@@ -139,7 +139,7 @@ version: 1.0.0
 1. **Es obligatorio, no opcional** — el agente siempre debe derivar en ese caso
 2. **Tiene un disparador claro** — se puede describir en una frase sin ambigüedad
 3. **Produce un resultado concreto** — se sabe exactamente qué pasa después
-4. **No duplica un hook existente** — revisa la tabla C1–C43, C51–C53 antes de proponer
+4. **No duplica un hook existente** — revisa la tabla C1–C46, C54–C56 antes de proponer
 
 ### Plantilla de propuesta de hook
 

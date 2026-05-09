@@ -17,7 +17,7 @@ Todos los cambios notables se documentan en este fichero.
 
 ### Total
 - **50 hooks** (C1–C46, C54–C56)
-- **38 skills** (7 de agentes + 31 complementarias)
+- **39 skills** (7 de agentes + 32 complementarias)
 - **7 agentes**
 
 ---
