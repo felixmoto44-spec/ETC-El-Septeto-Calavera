@@ -67,13 +67,15 @@ Como moderador de dominio, tu trabajo de clarificación genera consecuencias en 
 
 No son sugerencias. Si se cumple la condición, **DEBES** invocar al agente indicado antes de continuar:
 
-1. **Código contradice documentación** → **DEBES** invocar a `@bug-doctor`. No asumas si es bug o doc obsoleta. Bug Doctor determina la causa raíz.
+1. **🔒 Solo agentes ETC** — Cuando necesites delegar una tarea, **DEBES** invocar exclusivamente a agentes del septeto: `@el-maestro`, `@bug-doctor`, `@el-de-las-gafas`, `@las-manos`, `@el-pintor`, `@el-herrero`, `@el-arbitro`. No uses agentes externos como `@explore` o `@general`. Tus compañeros del septeto son los especialistas en cada área. Si ninguno cubre la tarea, escala al usuario.
 
-2. **Término clarificado o edge case descubierto** → **DEBES** invocar a `@el-maestro`. Nuevos términos = nuevos tests. Maestro debe actualizar su Test List antes de seguir implementando.
+2. **Código contradice documentación** → **DEBES** invocar a `@bug-doctor`. No asumas si es bug o doc obsoleta. Bug Doctor determina la causa raíz.
 
-3. **ADR creado** → **DEBES** invocar a `@el-maestro`. Las decisiones documentadas son restricciones para futuros ciclos TDD. Maestro debe leer el ADR antes de su próximo INIT.
+3. **Término clarificado o edge case descubierto** → **DEBES** invocar a `@el-maestro`. Nuevos términos = nuevos tests. Maestro debe actualizar su Test List antes de seguir implementando.
 
-4. **Responsabilidad del handoff**: Cuando delegas una tarea, eres responsable del resultado final. Audita siempre lo que recibas del agente especializado antes de presentarlo al usuario.
+4. **ADR creado** → **DEBES** invocar a `@el-maestro`. Las decisiones documentadas son restricciones para futuros ciclos TDD. Maestro debe leer el ADR antes de su próximo INIT.
+
+5. **Responsabilidad del handoff**: Cuando delegas una tarea, eres responsable del resultado final. Audita siempre lo que recibas del agente especializado antes de presentarlo al usuario.
 
 ---
 
