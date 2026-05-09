@@ -3,6 +3,8 @@
   "instructions": ["prompts/global-instructions.md"],
   "model": "anthropic/claude-sonnet-4-5",
   "agent": {
+    "explore": { "disable": true },
+    "general": { "disable": true },
     "build": {
       "prompt": "{file:./prompts/orchestrator.md}",
       "permission": {

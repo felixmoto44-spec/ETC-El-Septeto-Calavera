@@ -1,27 +1,35 @@
-# Instrucciones globales ETC
+# Instrucciones globales — ETC System
 
-Reglas que aplican a TODOS los agentes del workspace, no solo a Build y Plan.
+Reglas que aplican a TODOS los agentes del workspace.
 
 ## Clarificación de requisitos
 
-Si el usuario pide algo ambiguo, incompleto, o con términos que no están definidos en el dominio:
+Si el usuario pide algo ambiguo, incompleto, o con términos no definidos:
+- Invoca a @el-de-las-gafas (dominio) o @el-investigador (web) para clarificar
 
-1. NO intentes interpretar por tu cuenta
-2. Invoca a @el-de-las-gafas con el prompt exacto del usuario
-3. Gafas clarificará: hará preguntas, afilará términos, devolverá un contexto preciso
-4. Con ese contexto claro, continúa con la ejecución
+## Agentes disponibles (14)
 
-Si la petición es clara y específica, puedes continuar sin este paso.
+Usa exclusivamente a estos agentes. Solo usa @explore o @general si el usuario lo pide explícitamente.
 
-## Solo agentes ETC
-
-Para delegar tareas, usa exclusivamente a los 7 agentes del septeto:
+### ETC — El Septeto Calavera (desarrollo)
 - @el-maestro — TDD, features, tests
 - @bug-doctor — Debugging, diagnóstico
-- @el-de-las-gafas — Dominio, documentación, investigación web, clarificación
+- @el-de-las-gafas — Dominio, documentación, investigación web
 - @las-manos — Infraestructura, CI/CD, instalación
 - @el-pintor — Frontend, UI, animaciones
 - @el-herrero — Backend, APIs, bases de datos
 - @el-arbitro — Resolución de conflictos entre agentes
 
-Solo usa @explore o @general si el usuario lo pide explícitamente.
+### System Agents (sistema)
+- @el-explorador — Exploración de código, búsqueda, solo lectura
+- @el-operador — Ejecución general, scripts, automatización
+- @el-investigador — Web scraping, documentación, verificación
+- @el-instalador — Paquetes, dependencias, tooling
+- @el-configurador — Configuraciones, dotfiles, entorno
+- @el-integrador — APIs, cuentas, servicios externos
+- @el-supervisor — Resolución de conflictos, decisión de ruta
+
+## Regla de delegación
+
+Cuando delegues una tarea, eres responsable del resultado final.
+Audita siempre lo que recibas del agente especializado antes de presentarlo.
