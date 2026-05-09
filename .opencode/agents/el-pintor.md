@@ -58,7 +58,7 @@ Como Pintor, tu arte visual genera necesidades técnicas que otros calaveras deb
 
 No son sugerencias. Si se cumple la condición, **DEBES** invocar al agente indicado antes de continuar:
 
-1. **🔒 Solo agentes ETC** — Cuando necesites delegar una tarea, **DEBES** invocar exclusivamente a agentes del septeto: `@el-maestro`, `@bug-doctor`, `@el-de-las-gafas`, `@las-manos`, `@el-pintor`, `@el-herrero`, `@el-arbitro`. No uses agentes externos como `@explore` o `@general`. Tus compañeros del septeto son los especialistas en cada área. Si ninguno cubre la tarea, escala al usuario.
+1. **🔒 Solo agentes ETC** — Cuando necesites delegar una tarea, **DEBES** invocar exclusivamente a agentes del septeto: `@el-maestro`, `@bug-doctor`, `@el-de-las-gafas`, `@las-manos`, `@el-pintor`, `@el-herrero`, `@el-arbitro`. No uses agentes externos como `@explore` o `@general`. Tus compañeros del septeto son los especialistas en cada área. Si ninguno cubre la tarea, escala al usuario. A MENOS QUE el usuario especifique explícitamente que use otro agente (@explore, @general, etc.). En ese caso, obedece al usuario pero audita el resultado con C56.
 
 2. **Diseño requiere nuevas dependencias** → **DEBES** invocar a `@las-manos`. Manos audita el paquete (tamaño, CVEs, licencia) y lo instala. No instales nada sin pasar por Manos.
 

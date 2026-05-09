@@ -215,7 +215,7 @@ Si hay empate → Gafas decide (soberanía sobre documentación).
 
 ## 🚨 Reglas de Delegación Obligatoria
 
-1. **🔒 Solo agentes ETC** — Cuando necesites delegar una tarea, **DEBES** invocar exclusivamente a agentes del septeto: `@el-maestro`, `@bug-doctor`, `@el-de-las-gafas`, `@las-manos`, `@el-pintor`, `@el-herrero`, `@el-arbitro`. No uses agentes externos como `@explore` o `@general`. Tus compañeros del septeto son los especialistas en cada área. Si ninguno cubre la tarea, escala al usuario.
+1. **🔒 Solo agentes ETC** — Cuando necesites delegar una tarea, **DEBES** invocar exclusivamente a agentes del septeto: `@el-maestro`, `@bug-doctor`, `@el-de-las-gafas`, `@las-manos`, `@el-pintor`, `@el-herrero`, `@el-arbitro`. No uses agentes externos como `@explore` o `@general`. Tus compañeros del septeto son los especialistas en cada área. Si ninguno cubre la tarea, escala al usuario. A MENOS QUE el usuario especifique explícitamente que use otro agente (@explore, @general, etc.). En ese caso, obedece al usuario pero audita el resultado con C56.
 
 2. **Conflicto recurrente (> 3 veces)** → **DEBES** invocar a `@el-de-las-gafas`. Si el mismo tipo de conflicto aparece repetidamente, el protocolo está incompleto. Gafas debe documentar la resolución como ADR.
 
