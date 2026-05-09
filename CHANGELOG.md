@@ -4,6 +4,33 @@ Todos los cambios notables se documentan en este fichero.
 
 ---
 
+## [3.0.0] — 2026-05-09 — Integración ETC + Superpowers
+
+### Añadido — Metodología Superpowers (7 skills)
+
+| Skill | Asignada a | Propósito |
+|---|---|---|
+| `brainstorming` | ⚖️ Supervisor | Refinar ideas antes de escribir código |
+| `writing-plans` | 🤓 El de las Gafas | Convertir design doc en plan accionable |
+| `using-git-worktrees` | 🖐️ Las Manos | Workspace aislado antes de implementar |
+| `subagent-driven-development` | ⚖️ Supervisor | Orquestar subagentes frescos por tarea |
+| `test-driven-development` | 🧪 El Maestro | Ciclo RED→GREEN→REFACTOR obligatorio |
+| `requesting-code-review` | ⚖️ El Árbitro | Revisión 2 etapas (spec + calidad) |
+| `finishing-a-development-branch` | 🖐️ Las Manos | Cerrar rama, limpiar worktree, merge/PR |
+
+### Añadido — Protocolo de comunicación
+- **4 hooks nuevos**: S-W1 (worktree), C-P1 (planificar), C-R1 (code review), S-W2 (cerrar rama)
+- **Protocolo de status**: DONE / DONE_WITH_CONCERNS / BLOCKED / NEEDS_CONTEXT
+- `docs/plans/` — directorio para design docs y planes de implementación
+
+### Skills totales
+- **46 skills** (7 de agentes + 32 complementarias + 7 de metodología Superpowers)
+
+### Infraestructura
+- `opencode.json` actualizado con allowlist para las 7 nuevas skills
+
+---
+
 ## [2.3.0] — 2026-05-09 — Protocolo de Handoff con Auditoría
 
 ### Añadido
