@@ -38,6 +38,8 @@
       "software-architect": "allow",
       "sre": "allow",
       "technical-writer": "allow",
+      "github-research": "allow",
+      "firecrawl-scraper": "allow",
       "*": "deny"
     }
   }
