@@ -4,6 +4,25 @@ Todos los cambios notables se documentan en este fichero.
 
 ---
 
+## [2.2.0] — 2026-05-09 — Investigación Web Centralizada
+
+### Añadido
+- 🔍 Hook C54: todos los agentes delegan búsquedas web a El de las Gafas
+- 🔍 Modo Investigación Web en El de las Gafas (multicanal: docs, GitHub, SO, foros, source)
+- 📚 3 skills nuevas: github-research, stackoverflow-research, docs-verifier
+- Hook C55: auto-documentación de hallazgos de investigación como mini-ADR
+- Regla de delegación dura: "DEBES invocar a Gafas para búsquedas web"
+
+### Modificado
+- Los 6 agentes existentes: añadido hook C54 + regla de delegación
+- README.md: 49 hooks, 38 skills, nueva sección C54–C55
+
+### Total
+- 49 hooks (C1–C46, C54–C55)
+- 38 skills (7 de agentes + 31 complementarias)
+
+---
+
 ## [2.1.0] — 2026-05-09 — El Árbitro
 
 ### Agente nuevo

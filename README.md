@@ -1,6 +1,6 @@
 # 💀 ETC — El Septeto Calavera
 
-Configuración de agentes y skills para [OpenCode](https://opencode.ai), el entorno de codificación con IA. Este repo alberga a **ETC — El Septeto Calavera**, siete agentes especializados que forman un equipo de desarrollo completo, más 35 skills (7 de agentes + 28 complementarias).
+Configuración de agentes y skills para [OpenCode](https://opencode.ai), el entorno de codificación con IA. Este repo alberga a **ETC — El Septeto Calavera**, siete agentes especializados que forman un equipo de desarrollo completo, más 38 skills (7 de agentes + 31 complementarias).
 
 > _«Uno escribe, otro cura, el tercero cuestiona, el cuarto despliega, el quinto pinta, el sexto forja, el séptimo arbitra. Juntos: ETC — El Septeto Calavera.»_
 
@@ -33,6 +33,8 @@ Diagnostica bugs complejos con un método forense de 6 fases. Su principio funda
 ### 🤓 El de las Gafas — Domain Moderator
 
 Moderador de dominio que ve lo que otros pasan por alto: términos ambiguos, contradicciones entre código y discurso, decisiones no documentadas. Actualiza `CONTEXT.md` y crea ADRs en vivo mientras las decisiones cristalizan. Aplica principios de Domain-Driven Design.
+
+Incluye un **Modo Investigación Web** con búsqueda multicanal (documentación oficial, GitHub Issues, Stack Overflow, foros, source code) que centraliza todas las búsquedas web del equipo a través del hook C54.
 
 **Origen**: [mattpocock/skills](https://github.com/mattpocock/skills)
 
@@ -72,7 +74,7 @@ Incluye hooks **C51–C53** para arbitraje de conflictos, escalación, y documen
 
 ## 🤝 Colaboración entre Agentes
 
-Los 7 agentes de ETC no trabajan en aislamiento — se invocan entre sí automáticamente según el contexto. Hay **46 hooks de colaboración** (C1–C43, C51–C53) documentados en sus instrucciones, y cada agente integra internamente la lógica de sus especialidades.
+Los 7 agentes de ETC no trabajan en aislamiento — se invocan entre sí automáticamente según el contexto. Hay **49 hooks de colaboración** (C1–C46, C54–C55) documentados en sus instrucciones, y cada agente integra internamente la lógica de sus especialidades.
 
 > _«El Maestro implementa, Bug Doctor diagnostica, El de las Gafas clarifica, Las Manos despliega, El Pintor da vida al frontend, El Herrero forja el backend. El Árbitro resuelve cuando chocan. El que calla una duda al compañero, la paga con un bug.»_
 
@@ -84,13 +86,13 @@ Cada agente tiene un rol primario claro, y cuando detecta que está fuera de su 
 |--------|-------------|-------------|
 | 🧪 **El Maestro** | Implementar features y fixes con TDD | 🤓 Gafas (dominio), 🩺 Bug Doctor (bugs), 🖐️ Manos (deploy/env), 🎨 Pintor (frontend), ⚒️ Herrero (backend) |
 | 🩺 **Bug Doctor** | Diagnosticar causa raíz de bugs | 🧪 Maestro (implementar fix), 🤓 Gafas (deuda de dominio), 🖐️ Manos (entorno/seguridad), 🎨 Pintor (bugs visuales), ⚒️ Herrero (bugs de datos) |
-| 🤓 **El de las Gafas** | Clarificar ubiquitous language y documentación | 🧪 Maestro (blindar con tests), 🩺 Bug Doctor (bugs por ambigüedad), 🖐️ Manos (infra/secretos), 🎨 Pintor (patrones UI → ADR), ⚒️ Herrero (modelos de datos → CONTEXT) |
+| 🤓 **El de las Gafas** | Clarificar ubiquitous language, documentación, e investigación web | 🧪 Maestro (blindar con tests), 🩺 Bug Doctor (bugs por ambigüedad), 🖐️ Manos (infra/secretos), 🎨 Pintor (patrones UI → ADR), ⚒️ Herrero (modelos de datos → CONTEXT) |
 | 🖐️ **Las Manos** | Infraestructura, CI/CD, secretos, dependencias, incidentes, worktrees, auditoría de skills | 🧪 Maestro (deploy feature), 🩺 Bug Doctor (incidentes), 🤓 Gafas (ADR operacionales), 🎨 Pintor (deps frontend), ⚒️ Herrero (infra backend) |
 | 🎨 **El Pintor** | Diseño visual, animaciones, performance frontend, accesibilidad, prototipado | 🧪 Maestro (implementar UI con TDD), 🖐️ Manos (dependencias), 🤓 Gafas (ADR de diseño), 🩺 Bug Doctor (bugs visuales), ⚒️ Herrero (contratos de API) |
 | ⚒️ **El Herrero** | APIs, schemas, auth, arquitectura, caching, seguridad | 🧪 Maestro (implementar con TDD), 🖐️ Manos (infraestructura), 🤓 Gafas (modelo de dominio), 🩺 Bug Doctor (bugs de datos), 🎨 Pintor (contratos de API) |
 | ⚖️ **El Árbitro** | Resolver conflictos entre agentes, mediar disputas, documentar precedentes | 🤓 Gafas (conflicto recurrente → ADR), usuario (conflicto irresoluble) |
 
-### Los 46 hooks de colaboración (C1–C43, C51–C53)
+### Los 49 hooks de colaboración (C1–C46, C54–C55)
 
 #### Hooks C1–C14: El Trío Original (Maestro ↔ Bug Doctor ↔ Gafas)
 
@@ -173,13 +175,20 @@ Cada agente tiene un rol primario claro, y cuando detecta que está fuera de su 
 | C52 | Cualquiera | Protocolo de escalación paso 3 — se iba a molestar al usuario | ⚖️ Árbitro | Conflicto resuelto sin intervención humana |
 | C53 | ⚖️ Árbitro | Mismo tipo de conflicto aparece por tercera vez | 🤓 Gafas | Propuesta de ADR o actualización de conflict-resolution.md |
 
+#### Hooks C54–C55: El de las Gafas — Investigación Web Centralizada
+
+| # | Inicia | Gatillo | Invoca a | Resultado |
+|---|--------|---------|----------|-----------|
+| C54 | Cualquiera | Necesita buscar información actualizada en internet | 🤓 Gafas | Investigación multicanal con resultados comparados y nivel de confianza |
+| C55 | 🤓 Gafas | Investigación revela información relevante para el equipo | ✍️ Gafas | Mini-ADR o nota en CONTEXT.md documentada |
+
 ### Lógica especializada absorbida
 
 Cada agente principal integra la lógica de sus especialidades sin necesidad de sub-agentes:
 
 | Agente | Skills absorbidas |
 |--------|-------------------|
-| 🤓 **El de las Gafas** | ddd-strategic-design (subdominios), ddd-context-mapping (patrones bounded context), improve-codebase-architecture (deepening) |
+| 🤓 **El de las Gafas** | ddd-strategic-design (subdominios), ddd-context-mapping (patrones bounded context), improve-codebase-architecture (deepening), github-research, stackoverflow-research, docs-verifier |
 | 🖐️ **Las Manos** | senior-devops (CI/CD, Docker, IaC), dependency-auditor (CVEs, licencias), env-secrets-manager (.env, leaks), incident-commander (SEV-0→3), git-worktree-manager, skill-security-auditor, git-guardrails, setup-pre-commit |
 | 🎨 **El Pintor** | frontend-developer (React/Vue/Angular), accessibility-auditor (WCAG), rapid-prototyper (MVPs), más conocimiento propio de animaciones (GSAP, Framer Motion, Three.js), performance (Core Web Vitals), PWA, y CSS moderno |
 | ⚒️ **El Herrero** | backend-architect (sistemas escalables), database-optimizer (PostgreSQL/Supabase), api-tester (validación), security-engineer (OWASP), más conocimiento propio de tRPC, OAuth 2.0/OIDC, CQRS/Event Sourcing, caching, y message queues |
@@ -289,6 +298,13 @@ Cada agente tiene reglas duras de delegación — no sugerencias, sino checkpoin
 | ⚒️ Herrero | → Pintor | Contrato de API listo |
 | ⚖️ Árbitro | → Gafas | Conflicto recurrente (> 3 veces) |
 | ⚖️ Árbitro | → Usuario | Conflicto irresoluble |
+| 🧪 Maestro | → Gafas | Necesita búsqueda web |
+| 🩺 Bug Doctor | → Gafas | Necesita búsqueda web |
+| 🤓 Gafas | → web (C54) | Investigación multicanal delegada |
+| 🖐️ Manos | → Gafas | Necesita búsqueda web |
+| 🎨 Pintor | → Gafas | Necesita búsqueda web |
+| ⚒️ Herrero | → Gafas | Necesita búsqueda web |
+| ⚖️ Árbitro | → Gafas | Necesita búsqueda web |
 
 ---
 
@@ -374,8 +390,11 @@ Estas skills están absorbidas como modos internos de El de las Gafas y Las Mano
 | `skill-security-auditor` | Auditoría de skills de terceros | 🖐️ Las Manos |
 | `git-guardrails` | Pre-commit hooks de seguridad | 🖐️ Las Manos |
 | `setup-pre-commit` | Instalación y configuración de pre-commit | 🖐️ Las Manos |
+| `github-research` | Búsqueda en GitHub Issues, PRs y discusiones | 🤓 El de las Gafas |
+| `stackoverflow-research` | Búsqueda en Stack Overflow con validación comunitaria | 🤓 El de las Gafas |
+| `docs-verifier` | Verificación de vigencia contra documentación oficial | 🤓 El de las Gafas |
 
-**Total: 7 agentes principales con lógica especializada absorbida + 35 skills (7 de agentes + 28 complementarias).**
+**Total: 7 agentes principales con lógica especializada absorbida + 38 skills (7 de agentes + 31 complementarias).**
 
 ---
 
@@ -451,6 +470,16 @@ Luego en OpenCode:
 ---
 
 ## 📦 Releases
+
+### v2.2.0 — Investigación Web Centralizada (2026-05-09)
+
+- 🔍 **Hook C54**: todos los agentes delegan búsquedas web a El de las Gafas
+- 🔍 **Modo Investigación Web** en El de las Gafas (búsqueda multicanal: docs oficiales, GitHub Issues, Stack Overflow, foros, source code)
+- 📚 **3 skills nuevas**: `github-research`, `stackoverflow-research`, `docs-verifier`
+- **Nuevo hook C55**: auto-documentación de hallazgos de investigación como mini-ADR
+- **49 hooks totales** (C1–C46, C54–C55) entre los 7 agentes
+- **38 skills** en `.opencode/skills/` (7 de agentes + 31 complementarias)
+- **Regla de delegación dura**: "DEBES invocar a Gafas para búsquedas web" en los 6 agentes
 
 ### v2.1.0 — El Septeto Calavera (2026-05-09)
 

@@ -1,6 +1,6 @@
 # ETC — Tests de Hooks
 
-Escenarios de validación para los 46 hooks de colaboración (C1–C43, C51–C53).
+Escenarios de validación para los 49 hooks de colaboración (C1–C46, C54–C55).
 
 Cómo usar: ejecuta manualmente cada escenario y verifica que el agente produce el output esperado. Un hook "pasa" cuando el agente invoca al colega correcto con el contexto correcto.
 
@@ -354,6 +354,28 @@ Provisiona una instancia de Redis en Railway y configura las variables de entorn
 
 **Paso 4:** Gafas revisa otros módulos
 - ¿Encontró patrón de ambigüedad y notificó a Bug Doctor? ✓/✗ (C14)
+
+---
+
+## Hooks C54–C55: Investigación Web Centralizada
+
+### C54 — [Agente] → Gafas (búsqueda web)
+
+**Disparador:** Cualquier agente necesita información actualizada de internet
+
+**Input de prueba:**
+```
+@el-maestro Necesito saber cuál es la última versión estable de Next.js y si
+hay breaking changes entre la 14 y la 15 que afecten al middleware de auth.
+```
+
+**Output esperado:**
+- El agente reconoce que necesita búsqueda web
+- Invoca explícitamente a Gafas: "@el-de-las-gafas, necesito investigar..."
+- Proporciona consulta exacta con contexto del proyecto
+- NO intenta buscar ni responder basándose en conocimiento desactualizado
+
+**Criterio de fallo:** El agente responde con información de su conocimiento de entrenamiento sin verificar fuentes actuales.
 
 ---
 
