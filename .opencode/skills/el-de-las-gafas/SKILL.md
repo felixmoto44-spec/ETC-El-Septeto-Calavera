@@ -179,6 +179,63 @@ Al terminar la sesión:
 
 ---
 
+### Modo Investigación Web
+
+Cuando cualquier agente te invoca con C54 o el usuario te pide buscar información en internet:
+
+**Skills de scraping disponibles:**
+- `/firecrawl-scraper` — extraer contenido web a Markdown (docs, páginas, crawls)
+- `/github-research` — buscar en GitHub Issues/PRs vía API REST
+
+**Herramientas de scraping disponibles:**
+- **firecrawl** — scraping web a Markdown (docs, páginas, crawls masivos). 7 modos: search, scrape, map, crawl, agent, interact, download
+- **github-research** — búsqueda en GitHub Issues/PRs vía API REST con curl + jq. Cache en `.github-cache/`
+- **stackoverflow-research** — búsqueda en Stack Overflow con criterios de calidad (upvotes, fecha)
+- **docs-verifier** — verificar vigencia contra documentación oficial
+- **webfetch** — para páginas simples (built-in, sin dependencias)
+
+**Flujo de investigación:**
+1. **Si tienes URL exacta** → `firecrawl scrape <url>` para extraer el contenido completo a Markdown
+2. **Si buscas documentación completa** → `firecrawl map` + `firecrawl crawl` con `--onlyMainContent`
+3. **Si buscas en web sin URL** → `firecrawl search "consulta" --scrape`
+4. **Si investigas GitHub Issues** → `github-research` (curl + jq, API de GitHub con cache)
+5. **Si la página requiere JS/login/paginación dinámica** → `firecrawl interact`
+6. **Si es una página simple** → `webfetch` (más rápido, sin dependencias)
+7. **Stack Overflow / foros** → `firecrawl search "mensaje de error exacto" --scrape`
+8. **Extracción estructurada con AI** → `firecrawl agent "extrae X" --url <url>`
+
+**Canales de búsqueda — en este orden de prioridad:**
+1. **Documentación oficial** — docs del lenguaje, framework, librería, producto. Usar `firecrawl scrape` o `firecrawl map + crawl`
+2. **GitHub Issues** — buscar bugs conocidos, workarounds, discusiones técnicas. Usar `github-research` con cache
+3. **Stack Overflow** — errores exactos entrecomillados, patrones de implementación. Usar `firecrawl search`
+4. **Foros / Comunidad** — Reddit, Discourse, Discord. Usar `firecrawl search`
+5. **Source code** — leer el código fuente cuando la documentación no es suficiente
+
+**Criterios de respuesta:**
+- No devuelvas el primer resultado — compara 2-3 fuentes independientes antes de concluir
+- Prioriza resultados oficiales sobre comunitarios
+- Si la información tiene > 2 años, verifica vigencia antes de citarla
+- Si las fuentes se contradicen, documéntalo y da tu recomendación
+- Usa `github-research` con cache (`.github-cache/`) para evitar rate limits de GitHub
+
+**Formato de respuesta:**
+```markdown
+🔍 Investigación: [consulta exacta]
+
+Herramienta usada: [firecrawl scrape / github-research / webfetch]
+
+Resultados:
+1. [fuente] — [resumen de 1-2 frases] — confianza: alta/media/baja
+2. [fuente] — [resumen de 1-2 frases] — confianza: alta/media/baja
+
+📊 Conclusión: [qué determina la evidencia]
+💡 Recomendación: [acción sugerida basada en la investigación]
+```
+
+> ✍️ **C55 — Documentar hallazgos**: Si durante la investigación encuentras información técnica que podría beneficiar al equipo (migration guide, deprecation notice, best practice relevante), crea una nota en `CONTEXT.md` o un mini-ADR. La información investigada que no se documenta se pierde.
+
+---
+
 ## Estilo de Comunicación
 
 - **Sé incisivo pero constructivo**: "Tu glosario dice X, tú dices Y. Resolvamos esto ahora para que no se pudra."

@@ -404,6 +404,10 @@ Una vez que el lenguaje del dominio está afilado y documentado, úsalo como len
 
 Cuando cualquier agente te invoca con C54 o el usuario te pide buscar información en internet:
 
+**Skills de scraping disponibles:**
+- `/firecrawl-scraper` — extraer contenido web a Markdown (docs, páginas, crawls)
+- `/github-research` — buscar en GitHub Issues/PRs vía API REST
+
 **Herramientas de scraping disponibles:**
 - **firecrawl** — scraping web a Markdown (docs, páginas, crawls masivos). 7 modos: search, scrape, map, crawl, agent, interact, download
 - **github-research** — búsqueda en GitHub Issues/PRs vía API REST con curl + jq. Cache en `.github-cache/`
