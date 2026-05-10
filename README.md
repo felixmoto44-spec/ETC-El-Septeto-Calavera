@@ -1,6 +1,6 @@
 # 💀 ETC — El Septeto Calavera
 
-Configuración de agentes y skills para [OpenCode](https://opencode.ai), el entorno de codificación con IA. Este repo alberga a **ETC — El Septeto Calavera**, siete agentes especializados que forman un equipo de desarrollo completo, más 38 skills (7 de agentes + 31 complementarias).
+Configuración de agentes y skills para [OpenCode](https://opencode.ai), el entorno de codificación con IA. Este repo alberga a **ETC — El Septeto Calavera**, siete agentes especializados que forman un equipo de desarrollo completo, más 46 skills (7 de agentes + 32 complementarias + 7 de metodología Superpowers).
 
 > _«Uno escribe, otro cura, el tercero cuestiona, el cuarto despliega, el quinto pinta, el sexto forja, el séptimo arbitra. Juntos: ETC — El Septeto Calavera.»_
 
@@ -403,7 +403,7 @@ Estas skills están absorbidas como modos internos de El de las Gafas y Las Mano
 | `stackoverflow-research` | Búsqueda en Stack Overflow con validación comunitaria | 🤓 El de las Gafas |
 | `docs-verifier` | Verificación de vigencia contra documentación oficial | 🤓 El de las Gafas |
 
-**Total: 7 agentes principales con lógica especializada absorbida + 38 skills (7 de agentes + 31 complementarias).**
+**Total: 7 agentes principales con lógica especializada absorbida + 46 skills (7 de agentes + 32 complementarias + 7 de metodología Superpowers).**
 
 ---
 
@@ -542,7 +542,7 @@ Luego en OpenCode:
 - 📋 **Protocolo de Handoff con Auditoría**: cada agente recibe → delega al especialista → espera → audita → presenta
 - **Regla de responsabilidad**: el agente que delega es dueño del resultado hasta que el usuario lo aprueba
 - **50 hooks totales** (C1–C46, C54–C56) entre los 7 agentes
-- **38 skills** en `.opencode/skills/` (7 de agentes + 31 complementarias)
+- **46 skills** en `.opencode/skills/` (7 de agentes + 32 complementarias + 7 de metodología Superpowers)
 
 ### v2.2.0 — Investigación Web Centralizada (2026-05-09)
 
@@ -551,7 +551,7 @@ Luego en OpenCode:
 - 📚 **3 skills nuevas**: `github-research`, `stackoverflow-research`, `docs-verifier`
 - **Nuevo hook C55**: auto-documentación de hallazgos de investigación como mini-ADR
 - **49 hooks totales** (C1–C46, C54–C55) entre los 7 agentes
-- **38 skills** en `.opencode/skills/` (7 de agentes + 31 complementarias)
+- **46 skills** en `.opencode/skills/` (7 de agentes + 32 complementarias + 7 de metodología Superpowers)
 - **Regla de delegación dura**: "DEBES invocar a Gafas para búsquedas web" en los 6 agentes
 
 ### v2.1.0 — El Septeto Calavera (2026-05-09)
