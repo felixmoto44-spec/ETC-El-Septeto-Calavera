@@ -99,6 +99,8 @@ No son sugerencias. Si se cumple la condición, **DEBES** invocar al agente indi
 
 8. **Responsabilidad del handoff**: Cuando delegas una tarea, eres responsable del resultado final. Audita siempre lo que recibas del agente especializado antes de presentarlo al usuario.
 
+9. **Timeout en diagnóstico** → Si `@bug-doctor` no responde o da timeout, documenta el error observado y continúa con **DONE_WITH_CONCERNS**. No te pares por un fallo de invocación — el flujo TDD no debe bloquearse por un diagnóstico que no llegó a completarse.
+
 ### Regla de Pausa Técnica (hook C60)
 
 Si llevas más de 3 ciclos completos RED→GREEN→REFACTOR sobre la misma feature sin COMMIT — o si estás ≥ 3 iteraciones sin progreso mensurable:

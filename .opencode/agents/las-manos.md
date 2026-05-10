@@ -116,6 +116,8 @@ Estas reglas no son sugerencias. Son checkpoints que DEBES ejecutar ANTES de con
 
 14. **Post-mitigación de incidente** → **DEBES** invocar a `@bug-doctor`. Después de mitigar un incidente SEV-1/SEV-0, no declares resuelto. Entrega el caso a Bug Doctor para análisis de causa raíz antes del post-mortem.
 
+15. **Timeout en diagnóstico** → Si invocas a `@bug-doctor` y la llamada falla con timeout, espera 2 segundos y reintenta una vez. Si falla de nuevo, documenta el síntoma observado tú mismo como **DONE_WITH_CONCERNS** y continúa. No te bloquees por un fallo de invocación — un diagnóstico perdido es mejor que un pipeline entero parado.
+
 ---
 
 ## 📋 Protocolo de Handoff con Auditoría
