@@ -86,6 +86,7 @@
       "test-driven-development": "allow",
       "using-git-worktrees": "allow",
       "writing-plans": "allow",
+      "perfil-usuario": "allow",
       "*": "deny"
     }
   }
