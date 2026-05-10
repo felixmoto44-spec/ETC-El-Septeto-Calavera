@@ -78,7 +78,7 @@
       "stackoverflow-research": "allow",
       "technical-writer": "allow",
       "github-research": "allow",
-      "firecrawl-scraper": "allow",
+      "web-scraper": "allow",
       "brainstorming": "allow",
       "finishing-a-development-branch": "allow",
       "requesting-code-review": "allow",
