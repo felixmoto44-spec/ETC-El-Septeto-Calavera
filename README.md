@@ -541,6 +541,20 @@ Luego en OpenCode:
 @el-arbitro resuelve el conflicto entre Pintor y Herrero
 ```
 
+### Herramientas de investigación
+
+@el-investigador (System Agents) y @el-de-las-gafas (ETC) usan herramientas nativas del sistema para investigar en internet:
+
+| Herramienta | Instalación | Coste |
+|-------------|-------------|-------|
+| `lynx` | `sudo apt install lynx` | ✅ Gratis |
+| `html2text` | `pip install html2text` | ✅ Gratis |
+| `curl` | Viene con el SO | ✅ Gratis |
+| `jq` | `sudo apt install jq` | ✅ Gratis |
+
+Sin API keys, sin cuentas, sin configuraciones. 
+Si necesitas firecrawl (opcional, con API key), se puede instalar con `npm install -g firecrawl`.
+
 ---
 
 ## 📦 Releases

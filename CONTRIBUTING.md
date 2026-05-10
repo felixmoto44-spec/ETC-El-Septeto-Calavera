@@ -122,11 +122,19 @@ version: 1.0.0
 [Qué produce esta skill al ejecutarse]
 ```
 
+### Política de herramientas
+
+Si contribuyes con una skill que requiere herramientas externas, prioriza herramientas que sean **gratuitas, nativas del sistema, y sin necesidad de API keys**. Esto asegura que cualquier usuario pueda usar la skill inmediatamente sin configuraciones ni costes adicionales.
+
+Si la herramienta óptima requiere API key (ej. firecrawl, servicios SaaS), documéntalo explícitamente como alternativa opcional y provee siempre un método gratuito alternativo.
+
 ### Checklist antes de hacer PR con una skill nueva
 
 - [ ] El frontmatter tiene `name`, `description`, `license` y `compatibility`
 - [ ] La descripción menciona explícitamente cuándo invocarla
 - [ ] La skill tiene sección "Cuándo NO usar" para evitar solapamiento
+- [ ] La skill usa herramientas gratuitas y nativas del sistema siempre que sea posible
+- [ ] Si requiere API key, está documentado como opcional y hay alternativa gratuita
 - [ ] La skill está añadida al `opencode.json` en la allowlist
 - [ ] La skill está listada en la tabla del README en la sección correcta
 
