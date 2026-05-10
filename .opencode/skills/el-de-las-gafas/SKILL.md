@@ -184,31 +184,33 @@ Al terminar la sesión:
 Cuando cualquier agente te invoca con C54 o el usuario te pide buscar información en internet:
 
 **Skills de scraping disponibles:**
-- `/firecrawl-scraper` — extraer contenido web a Markdown (docs, páginas, crawls)
+- `/web-scraper` — extraer contenido web a Markdown con herramientas nativas (lynx, curl, html2text)
 - `/github-research` — buscar en GitHub Issues/PRs vía API REST
 
 **Herramientas de scraping disponibles:**
-- **firecrawl** — scraping web a Markdown (docs, páginas, crawls masivos). 7 modos: search, scrape, map, crawl, agent, interact, download
+- **lynx -dump** — convertir cualquier web a texto plano (gratis, sin config, recomendado)
+- **curl + html2text** — descargar HTML y convertirlo a Markdown (gratis)
+- **curl + jq** — consultar APIs REST como GitHub (gratis, 60 req/hora sin token)
+- **webfetch** — para páginas simples (built-in, sin dependencias)
 - **github-research** — búsqueda en GitHub Issues/PRs vía API REST con curl + jq. Cache en `.github-cache/`
 - **stackoverflow-research** — búsqueda en Stack Overflow con criterios de calidad (upvotes, fecha)
 - **docs-verifier** — verificar vigencia contra documentación oficial
-- **webfetch** — para páginas simples (built-in, sin dependencias)
+- **firecrawl** — OPCIONAL (requiere API key, solo si está configurado)
 
 **Flujo de investigación:**
-1. **Si tienes URL exacta** → `firecrawl scrape <url>` para extraer el contenido completo a Markdown
-2. **Si buscas documentación completa** → `firecrawl map` + `firecrawl crawl` con `--onlyMainContent`
-3. **Si buscas en web sin URL** → `firecrawl search "consulta" --scrape`
-4. **Si investigas GitHub Issues** → `github-research` (curl + jq, API de GitHub con cache)
-5. **Si la página requiere JS/login/paginación dinámica** → `firecrawl interact`
+1. **Si tienes URL exacta** → `lynx -dump -nolist <url>` o `webfetch <url>`
+2. **Si buscas documentación completa** → `lynx -dump -nolist` para explorar, `curl + html2text` para extraer
+3. **Si buscas en web sin URL** → `lynx -dump -nolist "https://google.com/search?q=consulta"` o `webfetch`
+4. **Si investigas GitHub Issues** → `github-research` (curl + jq, API de GitHub con cache, gratis sin token)
+5. **Si la página requiere JS/login/paginación dinámica** → intenta `curl` primero. Si no funciona, prueba `webfetch`
 6. **Si es una página simple** → `webfetch` (más rápido, sin dependencias)
-7. **Stack Overflow / foros** → `firecrawl search "mensaje de error exacto" --scrape`
-8. **Extracción estructurada con AI** → `firecrawl agent "extrae X" --url <url>`
+7. **Stack Overflow / foros** → `lynx -dump -nolist "https://stackoverflow.com/search?q=consulta"`
 
 **Canales de búsqueda — en este orden de prioridad:**
-1. **Documentación oficial** — docs del lenguaje, framework, librería, producto. Usar `firecrawl scrape` o `firecrawl map + crawl`
+1. **Documentación oficial** — docs del lenguaje, framework, librería, producto. Usar `lynx -dump` o `webfetch`
 2. **GitHub Issues** — buscar bugs conocidos, workarounds, discusiones técnicas. Usar `github-research` con cache
-3. **Stack Overflow** — errores exactos entrecomillados, patrones de implementación. Usar `firecrawl search`
-4. **Foros / Comunidad** — Reddit, Discourse, Discord. Usar `firecrawl search`
+3. **Stack Overflow** — errores exactos entrecomillados, patrones de implementación. Usar `lynx -dump`
+4. **Foros / Comunidad** — Reddit, Discourse, Discord. Usar `lynx -dump`
 5. **Source code** — leer el código fuente cuando la documentación no es suficiente
 
 **Criterios de respuesta:**
@@ -222,7 +224,7 @@ Cuando cualquier agente te invoca con C54 o el usuario te pide buscar informaci�
 ```markdown
 🔍 Investigación: [consulta exacta]
 
-Herramienta usada: [firecrawl scrape / github-research / webfetch]
+Herramienta usada: [lynx / curl+html2text / github-research / webfetch]
 
 Resultados:
 1. [fuente] — [resumen de 1-2 frases] — confianza: alta/media/baja

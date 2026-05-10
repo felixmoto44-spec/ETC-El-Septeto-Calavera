@@ -9,11 +9,15 @@ compatibility: opencode
 
 Busca y analiza información en GitHub usando la API REST con `curl` y `jq`. Incluye cacheo de resultados, manejo de paginación, y ejemplos concretos de queries.
 
+## ✨ Funciona sin API key (gratis)
+
+La API pública de GitHub permite **60 requests por hora sin autenticación**. Suficiente para la mayoría de investigaciones puntuales. Con token aumentas a 5000 req/hora.
+
 ## Configuración
 
-### GitHub Token
+### GitHub Token (opcional — aumenta rate limit)
 ```bash
-# Necesario para aumentar rate limit de 60 a 5000 requests/hora
+# Opcional: para aumentar rate limit de 60 a 5000 requests/hora
 export GITHUB_TOKEN=ghp_xxxxxxxxxxxx
 
 # Verificar que funciona
@@ -26,6 +30,36 @@ Crea el directorio de cache:
 ```bash
 mkdir -p .github-cache
 ```
+
+## Ejemplos sin token (recomendado para empezar)
+
+Si no tienes `GITHUB_TOKEN` configurado, estos comandos funcionan igual:
+
+### Buscar issues públicos
+```bash
+curl -s "https://api.github.com/search/issues?q=repo:user/repo+bug+state:closed&per_page=5" | \
+  jq '.items[] | {number, title, state, labels: [.labels[].name]}'
+```
+
+### Obtener info de un repo
+```bash
+curl -s "https://api.github.com/repos/user/repo" | \
+  jq '{name, description, stars: .stargazers_count, forks, open_issues}'
+```
+
+### Buscar en todos los repos públicos de un usuario
+```bash
+curl -s "https://api.github.com/search/issues?q=user:username+bug&per_page=5" | \
+  jq '.items[] | {number, title, state}'
+```
+
+### Verificar rate limit restante
+```bash
+curl -s https://api.github.com/rate_limit | jq '{core: .rate.remaining, search: .resources.search.remaining}'
+```
+
+> ⚠️ **Sin token**: 60 req/hora. Si ves `403` o `401`, espera o configura un token.
+> Con token: 5000 req/hora. Configura `export GITHUB_TOKEN=ghp_...` en tu shell.
 
 ## Cuándo usarla
 
@@ -68,22 +102,24 @@ curl -s -H "Authorization: token $GITHUB_TOKEN" \
 
 ## Cache de resultados para evitar rate limits
 
-### Script de cache
+### Script de cache (con y sin token)
 ```bash
 # ~/bin/gh-cached.sh
 #!/bin/bash
 CACHE_DIR=".github-cache"
 CACHE_KEY=$(echo "$1" | md5sum | cut -d' ' -f1)
 CACHE_FILE="$CACHE_DIR/$CACHE_KEY.json"
+HEADER=""
+[ -n "$GITHUB_TOKEN" ] && HEADER="-H \"Authorization: token $GITHUB_TOKEN\""
 
 if [ -f "$CACHE_FILE" ] && [ $(($(date +%s) - $(stat -c %Y "$CACHE_FILE"))) -lt 3600 ]; then
   cat "$CACHE_FILE"
 else
-  curl -s -H "Authorization: token $GITHUB_TOKEN" "$1" | tee "$CACHE_FILE"
+  eval curl -s $HEADER "$1" | tee "$CACHE_FILE"
 fi
 ```
 
-Uso:
+Uso (funciona con o sin GITHUB_TOKEN):
 ```bash
 gh-cached.sh "https://api.github.com/search/issues?q=repo:user/repo+bug+state:closed"
 ```
@@ -272,9 +308,12 @@ echo "Abiertos: $ABIERTOS | Cerrados: $CERRADOS"
 
 ## Buenas prácticas
 
-- Siempre usa `GITHUB_TOKEN` para rate limit de 5000 req/hora (vs 60 sin token)
-- Cachea resultados pesados en `.github-cache/` para no repetir queries idénticas
-- Usa `per_page=100` para minimizar páginas en resultados grandes
-- Filtra por `state:closed` para encontrar soluciones, no reportes
-- Prefiere `is:merged` sobre `state:closed` para PRs (evita PRs cerrados sin merge)
-- Las fechas en GitHub API son ISO 8601: `2024-01-15T10:30:00Z`
+- ✅ **Sin token funciona**: empieza sin token (60 req/hora). Solo configura token si necesitas más
+- 🔄 **Cachea resultados** en `.github-cache/` para no repetir queries idénticas y ahorrar rate limit
+- 📊 **Monitorea tu rate limit**: `curl -s https://api.github.com/rate_limit | jq '.rate.remaining'`
+- 📏 Usa `per_page=100` para minimizar páginas en resultados grandes
+- 🎯 Filtra por `state:closed` para encontrar soluciones, no reportes
+- ✅ Prefiere `is:merged` sobre `state:closed` para PRs (evita PRs cerrados sin merge)
+- 📅 Las fechas en GitHub API son ISO 8601: `2024-01-15T10:30:00Z`
+- ⏳ Si reaches rate limit, espera 1 hora o configura `GITHUB_TOKEN`
+- 🐌 Respeta rate limits: 1 request/segundo como cortesía (especialmente sin token)

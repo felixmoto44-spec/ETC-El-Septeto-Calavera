@@ -78,3 +78,11 @@ El Supervisor gestiona cada estado:
 
 Cuando delegues una tarea, eres responsable del resultado final.
 Audita siempre lo que recibas del agente especializado antes de presentarlo.
+
+## Política de herramientas
+
+Si necesitas una herramienta para realizar tu trabajo:
+1. **DEBES** invocar a @el-instalador para instalarla
+2. Prioriza herramientas que sean **gratis y sin configuración**
+3. Evita herramientas que requieran API keys, cuentas o suscripciones
+4. Si no hay alternativa gratuita viable, informa al usuario antes de instalar algo con coste
