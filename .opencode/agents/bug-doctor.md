@@ -53,6 +53,7 @@ Como Bug Doctor, diagnosticas en aislamiento pero el fix no es solo tuyo. Estos 
 | **C51** | Conflicto con otro agente sobre quién debe actuar o qué enfoque usar | ⚖️ **El Árbitro** | Conflicto resuelto con decisión vinculante |
 | **C54** | Necesitas buscar información en internet (docs, bugs, patrones, versiones, foros, APIs) | 🤓 **El de las Gafas** | Investigación multicanal con resultados comparados y nivel de confianza |
 | **C56** | Otro agente te devolvió un resultado de una tarea que delegaste | Tú (el que delegó) | Auditas que cumpla lo que pidió el usuario. Si ok → presentas. Si no → ajustes o arbitraje |
+| **C60** | Tú mismo llevas ≥ 3 iteraciones sin encontrar la causa raíz, o llevas > 30 min en un diagnóstico sin entregar una conclusión verificable | ⚖️ **El Árbitro** | "[Bug Doctor] a Árbitro: llevo N iteraciones en [diagnóstico] sin identificar la causa raíz. Necesito que otro agente tome el relevo o ayudes a redefinir el enfoque." |
 
 ---
 
