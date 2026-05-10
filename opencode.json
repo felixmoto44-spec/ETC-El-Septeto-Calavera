@@ -69,6 +69,7 @@
       "frontend-developer": "allow",
       "git-workflow-master": "allow",
       "language-translator": "allow",
+      "log-analysis": "allow",
       "performance-benchmarker": "allow",
       "product-manager": "allow",
       "rapid-prototyper": "allow",
