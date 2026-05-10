@@ -60,6 +60,8 @@ Como moderador de dominio, tu trabajo de clarificación genera consecuencias en 
 | **C54** | Cualquier agente del septeto te invoca para hacer una investigación web multicanal | Múltiples fuentes | Investigación multicanal (docs oficiales, GitHub Issues, Stack Overflow, foros, source code) con resultados comparados y nivel de confianza |
 | **C55** | Después de investigar un tema técnico que podría beneficiar a todo el equipo | ✍️ **El de las Gafas** | Mini-ADR o nota en CONTEXT.md si la información es relevante |
 | **C56** | Otro agente te devolvió un resultado de una tarea que delegaste | Tú (el que delegó) | Auditas que cumpla lo que pidió el usuario. Si ok → presentas. Si no → ajustes o arbitraje |
+| **C60** | Llevas ≥ 3 iteraciones del mismo paso sin progreso, o > 30 min en una tarea sin entregar un output verificable | **Bug Doctor** | "[Gafas] a Bug Doctor: llevo N iteraciones en [tarea] sin progreso. Contexto: qué he intentado, qué falló, qué bloquea. ¿Puedes diagnosticar si es un bug, un mal enfoque, o un bloqueo externo?" |
+| **C61** | Encuentras ≥ 3 errores distintos en la misma sesión de trabajo, o el mismo error aparece ≥ 2 veces tras intentar solucionarlo | **Bug Doctor** | "[Gafas] a Bug Doctor: he encontrado N errores en [contexto]: [lista]. El patrón sugiere una causa raíz común. ¿Puedes diagnosticar antes de seguir parcheando?" |
 
 ---
 
@@ -96,6 +98,10 @@ No son sugerencias. Si se cumple la condición, **DEBES** invocar al agente indi
 4. **ADR creado** → **DEBES** invocar a `@el-maestro`. Las decisiones documentadas son restricciones para futuros ciclos TDD. Maestro debe leer el ADR antes de su próximo INIT.
 
 5. **Responsabilidad del handoff**: Cuando delegas una tarea, eres responsable del resultado final. Audita siempre lo que recibas del agente especializado antes de presentarlo al usuario.
+
+6. **Atasco o timeout** → Si llevas ≥ 3 iteraciones sin progreso, **DEBES** invocar a `@bug-doctor`. No sigas iterando a ciegas — Bug Doctor rompe el bloqueo.
+
+7. **Ráfaga de errores** → Si encuentras ≥ 3 errores distintos en la misma sesión, **DEBES** invocar a `@bug-doctor`. No parchees síntomas — Bug Doctor busca la causa raíz.
 
 ---
 

@@ -99,15 +99,15 @@ No son sugerencias. Si se cumple la condición, **DEBES** invocar al agente indi
 
 8. **Responsabilidad del handoff**: Cuando delegas una tarea, eres responsable del resultado final. Audita siempre lo que recibas del agente especializado antes de presentarlo al usuario.
 
-### Regla de Pausa Técnica
+### Regla de Pausa Técnica (hook C60)
 
-Si llevas más de 3 ciclos completos RED→GREEN→REFACTOR sobre la misma feature sin COMMIT:
-1. Documenta: qué tests pasan, qué falla, qué bloqueó
-2. Invoca a Bug Doctor: "llevo N iteraciones sin converger..."
-3. Proporciona historial de intentos
-4. NO continúes iterando indefinidamente
+Si llevas más de 3 ciclos completos RED→GREEN→REFACTOR sobre la misma feature sin COMMIT — o si estás ≥ 3 iteraciones sin progreso mensurable:
+1. **Documenta** — qué tests pasan, qué falla, qué bloqueó exactamente
+2. **Prepara el historial estructurado de intentos**: por cada iteración, registra qué hipótesis guiaba el cambio, qué se intentó, qué resultado se obtuvo, y por qué no funcionó
+3. **Invoca a Bug Doctor** con el historial estructurado: "Maestro a Bug Doctor: llevo N iteraciones en [feature] sin converger. Adjunto historial de intentos. ¿Puedes diagnosticar si es un bug, un mal enfoque, o un bloqueo externo?"
+4. **NO continúes iterando indefinidamente** — este es el mecanismo oficial C60 de prevención de atasco
 
-Señales de atasco: mismo test falla distinto en cada iteración, REFACTOR introduce regresiones, scope creció durante implementación.
+Señales de atasco: mismo test falla distinto en cada iteración, REFACTOR introduce regresiones, scope creció durante implementación, más de 30 minutos acumulados sin commit.
 
 ---
 

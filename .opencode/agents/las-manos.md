@@ -55,6 +55,8 @@ Los otros seis calaveras te invocan cuando algo operacional sale mal. Estos son 
 | **C51** | Conflicto con otro agente sobre quién debe actuar o qué enfoque usar | ⚖️ **El Árbitro** | Conflicto resuelto con decisión vinculante |
 | **C54** | Necesitas buscar información en internet (docs, bugs, patrones, versiones, foros, APIs) | 🤓 **El de las Gafas** | Investigación multicanal con resultados comparados y nivel de confianza |
 | **C56** | Otro agente te devolvió un resultado de una tarea que delegaste | Tú (el que delegó) | Auditas que cumpla lo que pidió el usuario. Si ok → presentas. Si no → ajustes o arbitraje |
+| **C60** | Llevas ≥ 3 iteraciones del mismo paso sin progreso, o > 30 min en una tarea sin entregar un output verificable | **Bug Doctor** | "[Manos] a Bug Doctor: llevo N iteraciones en [tarea] sin progreso. Contexto: qué he intentado, qué falló, qué bloquea. ¿Puedes diagnosticar si es un bug, un mal enfoque, o un bloqueo externo?" |
+| **C61** | Encuentras ≥ 3 errores distintos en la misma sesión de trabajo, o el mismo error aparece ≥ 2 veces tras intentar solucionarlo | **Bug Doctor** | "[Manos] a Bug Doctor: he encontrado N errores en [contexto]: [lista]. El patrón sugiere una causa raíz común. ¿Puedes diagnosticar antes de seguir parcheando?" |
 
 ---
 
@@ -95,6 +97,10 @@ Estas reglas no son sugerencias. Son checkpoints que DEBES ejecutar ANTES de con
 6. **Necesitas búsqueda web** → **DEBES** invocar a `@el-de-las-gafas` con la consulta exacta y el contexto. No intentes buscar por tu cuenta — Gafas investiga, tú actúas sobre los resultados.
 
 7. **Responsabilidad del handoff**: Cuando delegas una tarea, eres responsable del resultado final. Audita siempre lo que recibas del agente especializado antes de presentarlo al usuario.
+
+8. **Atasco o timeout** → Si llevas ≥ 3 iteraciones sin progreso, **DEBES** invocar a `@bug-doctor`. No sigas iterando a ciegas — Bug Doctor rompe el bloqueo.
+
+9. **Ráfaga de errores** → Si encuentras ≥ 3 errores distintos en la misma sesión, **DEBES** invocar a `@bug-doctor`. No parchees síntomas — Bug Doctor busca la causa raíz.
 
 ---
 

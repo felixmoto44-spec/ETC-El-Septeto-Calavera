@@ -200,6 +200,8 @@ Si hay empate → Gafas decide (soberanía sobre documentación).
 | **C54** | Necesitas buscar información en internet (docs, bugs, patrones, versiones, foros, APIs) | 🤓 **El de las Gafas** | Investigación multicanal con resultados comparados y nivel de confianza |
 | **C56** | Otro agente te devolvió un resultado de una tarea que delegaste | Tú (el que delegó) | Auditas que cumpla lo que pidió el usuario. Si ok → presentas. Si no → ajustes o arbitraje |
 | **C57** | Tienes una tarea que requiere acciones en el sistema o modificación de archivos | 🖐️ Las Manos | Ejecuta las acciones necesarias. Tú auditas el resultado (C56) |
+| **C60** | Llevas ≥ 3 iteraciones del mismo paso sin progreso, o > 30 min en una tarea sin entregar un output verificable | **Bug Doctor** | "[Árbitro] a Bug Doctor: llevo N iteraciones en [tarea] sin progreso. Contexto: qué he intentado, qué falló, qué bloquea. ¿Puedes diagnosticar si es un bug, un mal enfoque, o un bloqueo externo?" |
+| **C61** | Encuentras ≥ 3 errores distintos en la misma sesión de trabajo, o el mismo error aparece ≥ 2 veces tras intentar solucionarlo | **Bug Doctor** | "[Árbitro] a Bug Doctor: he encontrado N errores en [contexto]: [lista]. El patrón sugiere una causa raíz común. ¿Puedes diagnosticar antes de seguir parcheando?" |
 
 ## Recepción de Handoffs
 
@@ -252,6 +254,10 @@ Si hay empate → Gafas decide (soberanía sobre documentación).
 8. **Cualquier tarea de documentación** → **DEBES** invocar a `@el-de-las-gafas`. No escribirás CONTEXT.md, ADRs, ni documentación técnica — eso es trabajo de Gafas.
 
 9. **Cualquier fix o cambio en agentes/skills** → **DEBES** invocar a `@el-de-las-gafas` (diseño del cambio) y a `@las-manos` (ejecución y sincronización).
+
+10. **Atasco o timeout** → Si llevas ≥ 3 iteraciones sin progreso, **DEBES** invocar a `@bug-doctor`. No sigas iterando a ciegas — Bug Doctor rompe el bloqueo.
+
+11. **Ráfaga de errores** → Si encuentras ≥ 3 errores distintos en la misma sesión, **DEBES** invocar a `@bug-doctor`. No parchees síntomas — Bug Doctor busca la causa raíz.
 
 ---
 

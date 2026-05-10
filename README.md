@@ -74,7 +74,7 @@ Incluye hooks **C51–C53** para arbitraje de conflictos, escalación, y documen
 
 ## 🤝 Colaboración entre Agentes
 
-Los 7 agentes de ETC no trabajan en aislamiento — se invocan entre sí automáticamente según el contexto. Hay **50 hooks de colaboración** (C1–C46, C54–C56) documentados en sus instrucciones, y cada agente integra internamente la lógica de sus especialidades.
+Los 7 agentes de ETC no trabajan en aislamiento — se invocan entre sí automáticamente según el contexto. Hay **52 hooks de colaboración** (C1–C46, C54–C61) documentados en sus instrucciones, y cada agente integra internamente la lógica de sus especialidades.
 
 Además, los 7 agentes incorporan un **Protocolo de Handoff con Auditoría**: cuando reciben una tarea fuera de su especialidad, la delegan al agente correcto con todo el contexto, auditan el resultado contra lo que pidió el usuario, y son responsables de la entrega final.
 
@@ -94,7 +94,7 @@ Cada agente tiene un rol primario claro, y cuando detecta que está fuera de su 
 | ⚒️ **El Herrero** | APIs, schemas, auth, arquitectura, caching, seguridad | 🧪 Maestro (implementar con TDD), 🖐️ Manos (infraestructura), 🤓 Gafas (modelo de dominio), 🩺 Bug Doctor (bugs de datos), 🎨 Pintor (contratos de API) |
 | ⚖️ **El Árbitro** | Resolver conflictos entre agentes, mediar disputas, documentar precedentes | 🤓 Gafas (conflicto recurrente → ADR), usuario (conflicto irresoluble) |
 
-### Los 50 hooks de colaboración (C1–C46, C54–C56)
+### Los 52 hooks de colaboración (C1–C46, C54–C61)
 
 #### Hooks C1–C14: El Trío Original (Maestro ↔ Bug Doctor ↔ Gafas)
 
@@ -189,6 +189,13 @@ Cada agente tiene un rol primario claro, y cuando detecta que está fuera de su 
 | # | Inicia | Gatillo | Invoca a | Resultado |
 |---|--------|---------|----------|-----------|
 | C56 | Cualquiera | Agente delegó tarea y especialista reportó resultado | Agente que delegó | Auditoría: ¿cumple lo que pidió el usuario? Si no → ajustes o arbitraje |
+
+#### Hooks C60–C61: Bug Doctor — Atascos y Ráfagas de Errores
+
+| # | Inicia | Gatillo | Invoca a | Resultado |
+|---|--------|---------|----------|-----------|
+| C60 | Cualquier agente (incluido Bug Doctor) | ≥ 3 iteraciones sin progreso, o > 30 min sin output verificable | 🩺 **Bug Doctor** (o ⚖️ **Árbitro** si Bug Doctor se atasca) | Diagnóstico de atasco: ¿bug, mal enfoque, o bloqueo externo? |
+| C61 | Cualquier agente | ≥ 3 errores distintos en la misma sesión, o mismo error ≥ 2 veces tras intentar solucionarlo | 🩺 **Bug Doctor** | Diagnóstico de causa raíz antes de seguir parcheando |
 
 ### Lógica especializada absorbida
 
@@ -314,6 +321,8 @@ Cada agente tiene reglas duras de delegación — no sugerencias, sino checkpoin
 | ⚒️ Herrero | → Gafas | Necesita búsqueda web |
 | ⚖️ Árbitro | → Gafas | Necesita búsqueda web |
 | 🧪🩺🤓🖐️🎨⚒️⚖️ **Todos** | **Responsabilidad del handoff** | **Al delegar, auditas y respondes por el resultado final** |
+| 🧪🩺🤓🖐️🎨⚒️⚖️ **Todos** | **Atasco o timeout (≥ 3 iteraciones sin progreso)** | **DEBES** invocar a `@bug-doctor` | Bug Doctor rompe el atasco |
+| 🧪🩺🤓🖐️🎨⚒️⚖️ **Todos** | **Ráfaga de errores (≥ 3 errores distintos en la sesión)** | **DEBES** invocar a `@bug-doctor` | Bug Doctor busca causa raíz |
 
 ---
 
@@ -535,6 +544,15 @@ Luego en OpenCode:
 ---
 
 ## 📦 Releases
+
+### v2.4.0 — Bug Doctor más implicado: hooks C60 (stuck) y C61 (error burst) (2026-05-10)
+
+- 🩺 **Hook C60**: cualquier agente atascado ≥ 3 iteraciones sin progreso → invoca a Bug Doctor
+- 🩺 **Hook C61**: cualquier agente con ≥ 3 errores distintos en la misma sesión → invoca a Bug Doctor
+- 🩺 **C60 auto-diagnóstico**: Bug Doctor también puede atascarse → invoca a El Árbitro para redefinir enfoque
+- 🧪 **Pausa Técnica mejorada**: Maestro ahora pasa historial estructurado de intentos a Bug Doctor
+- **52 hooks totales** (C1–C46, C54–C61) entre los 7 agentes
+- **46 skills** en `.opencode/skills/` (7 de agentes + 32 complementarias + 7 de metodología Superpowers)
 
 ### v2.3.0 — Protocolo de Handoff con Auditoría (2026-05-09)
 
