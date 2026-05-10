@@ -58,6 +58,9 @@ Usa exclusivamente a estos agentes. Solo usa @explore o @general si el usuario l
 | **C-P1** | ⚖️ Supervisor | Design doc firmado → listo para planificar | 🤓 El de las Gafas | Plan de implementación completo guardado en `docs/plans/` |
 | **C-R1** | ⚖️ Supervisor | Subagente reporta DONE o DONE_WITH_CONCERNS | ⚖️ El Árbitro | Revisión 2 etapas: spec compliance → code quality |
 | **S-W2** | ⚖️ Supervisor | Todas las tareas del plan completadas | 🖐️ Las Manos | Rama cerrada, worktree limpio, merge/PR ejecutado |
+| **C62** | 🖐️ Las Manos | Pipeline con errores mutantes | 🩺 Bug Doctor | Diagnóstico de bug de infraestructura |
+| **C63** | 🖐️ Las Manos | Herramienta de infraestructura crash | 🩺 Bug Doctor | Diagnóstico de bug de herramienta |
+| **C64** | 🖐️ Las Manos | Comportamiento divergente local/CI | 🩺 Bug Doctor | Diagnóstico de bug de entorno |
 
 ## Protocolo de status entre agentes
 

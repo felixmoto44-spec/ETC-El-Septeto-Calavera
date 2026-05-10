@@ -102,6 +102,16 @@ Estas reglas no son sugerencias. Son checkpoints que DEBES ejecutar ANTES de con
 
 9. **Ráfaga de errores** → Si encuentras ≥ 3 errores distintos en la misma sesión, **DEBES** invocar a `@bug-doctor`. No parchees síntomas — Bug Doctor busca la causa raíz.
 
+10. **Pipeline con errores mutantes** → **DEBES** invocar a `@bug-doctor`. Si el mismo stage del pipeline falla con errores diferentes tras 2 intentos de corrección, un error que muta su mensaje es síntoma de bug de infraestructura, no de configuración.
+
+11. **Herramienta de infraestructura crash** → **DEBES** invocar a `@bug-doctor`. Si una herramienta core (gitleaks, docker, npm/pip, terraform) falla con error interno (segfault, panic, stack trace, exit code 134/139/signal), no intentes arreglarlo con config. Es un bug de la herramienta.
+
+12. **Comportamiento divergente local/CI** → **DEBES** invocar a `@bug-doctor`. Si un paso del pipeline pasa en local pero falla en CI, o viceversa, no intentes igualar entornos manualmente. La divergencia indica bug de entorno.
+
+13. **Auditoría con resultado contradictorio** → **DEBES** invocar a `@bug-doctor`. Si una auditoría (npm audit, gitleaks, detect-secrets) produce resultado que contradice el estado esperado, no ignores ni parchees. Bug Doctor determina si es falso positivo o bug real.
+
+14. **Post-mitigación de incidente** → **DEBES** invocar a `@bug-doctor`. Después de mitigar un incidente SEV-1/SEV-0, no declares resuelto. Entrega el caso a Bug Doctor para análisis de causa raíz antes del post-mortem.
+
 ---
 
 ## 📋 Protocolo de Handoff con Auditoría
