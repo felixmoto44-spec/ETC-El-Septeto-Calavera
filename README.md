@@ -449,6 +449,24 @@ Instrucciones completas de personalidad, misión, reglas y flujo de trabajo...
 
 ---
 
+## 📋 Requisitos del sistema
+
+### Modelo de IA
+ETC está optimizado para **modelos con razonamiento fuerte** (Deepseek R2/PRO, Claude Sonnet 4.5+).
+
+Con modelos más rápidos/baratos (Haiku, GPT-4o-mini, Deepseek V3), los contratos entre agentes
+se vuelven frágiles. Recomendaciones:
+- **Reducir la cadena de hooks**: menos delegaciones, más ejecución directa
+- **Simplificar prompts**: instrucciones más cortas
+- **Fusionar agentes**: combinar roles similares
+
+### SO
+- Linux ✅ (recomendado)
+- macOS ✅ (soportado)
+- Windows ⚠️ (parcial, sin test automático)
+
+---
+
 ## Cómo Replicar Esto en Tu Proyecto
 
 ```bash
