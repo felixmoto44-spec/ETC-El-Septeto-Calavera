@@ -326,6 +326,29 @@ Cada agente tiene reglas duras de delegación — no sugerencias, sino checkpoin
 
 ---
 
+### Permisos de ejecución (bash)
+
+| Agente | Bash | Puede ejecutar |
+|--------|:----:|----------------|
+| 🧪 **El Maestro** | ✅ Allow | Tests, git commands, scripts de build |
+| 🩺 **Bug Doctor** | ✅ Allow | Debuggers, logs, herramientas de diagnóstico |
+| 🤓 **El de las Gafas** | ✅ Allow | Exploración del codebase, documentación |
+| 🖐️ **Las Manos** | ✅ Allow | Instalación, CI/CD, Docker, comandos de sistema |
+| 🎨 **El Pintor** | ✅ Allow | Dev servers, build tools, npm/pip |
+| ⚒️ **El Herrero** | ✅ Allow | Migraciones, tests de API, queries de DB |
+| ⚖️ **El Árbitro** | ❌ **Deny** | Solo decide y delega. No ejecuta nada. |
+| 🧭 **El Explorador** | ✅ Allow | grep, find, git log (solo lectura) |
+| 🛠️ **El Operador** | ✅ Allow | Scripts, automatización, tareas generales |
+| 🔍 **El Investigador** | ✅ Allow | curl, lynx, html2text, investigación web |
+| 📦 **El Instalador** | ✅ Allow | apt, npm, pip, brew, instalación de paquetes |
+| 🎛️ **El Configurador** | ✅ Allow | Modificar configs, dotfiles, variables de entorno |
+| 🔗 **El Integrador** | ✅ Allow | Configurar APIs, OAuth, webhooks, cuentas |
+| ⚖️ **El Supervisor** | ❌ **Deny** | Solo enruta tareas. No ejecuta nada. |
+
+> **Nota:** Los agentes con `bash: deny` (Árbitro, Supervisor) solo pueden leer archivos, cargar skills, invocar a otros agentes y preguntar al usuario. No pueden ejecutar ningún comando ni modificar archivos.
+
+---
+
 ## Estructura de Archivos
 
 ```
