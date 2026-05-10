@@ -11,10 +11,10 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
 
       - name: Create Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@e7a8f2e3efc0b8e9c1f3d4a5b6c7d8e9f0a1b2c3 # v2
         with:
           name: "ETC ${{ github.ref_name }}"
           generate_release_notes: true
