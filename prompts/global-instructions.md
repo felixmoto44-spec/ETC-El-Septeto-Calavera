@@ -34,6 +34,18 @@ Si ningún agente disponible puede ejecutar una tarea por falta de herramientas 
 3. Escala al usuario: "No es posible ejecutar esta tarea desde aquí. Necesito que la hagas manualmente: [comando exacto]"
 4. Esto NO es un fallo del sistema — es una limitación legítima del entorno
 
+## 🚀 Herramientas disponibles para AGENTES ESPECIALIZADOS
+
+Los agentes especializados TIENEN ACCESO a estas herramientas para ejecutar su trabajo:
+
+| Herramienta | Para qué | Quién la usa |
+|-------------|----------|-------------|
+| **`bash`** | Ejecutar comandos del sistema: git, npm, docker, pytest, compiladores, scripts, etc. | Todos los especializados |
+| **`read` / `write` / `edit`** | Leer, crear y modificar archivos del proyecto | Todos los especializados |
+| **`grep` / `glob`** | Buscar archivos y contenido en el código | Todos los especializados |
+
+**Regla**: Si necesitas ejecutar un comando de tu dominio, USA `bash`. No delegues comandos que tú puedes ejecutar. Si la herramienta no está instalada, invoca a @el-instalador.
+
 ## 🚨 Sin análisis autónomo
 
 **Para ORQUESTADORES:**
