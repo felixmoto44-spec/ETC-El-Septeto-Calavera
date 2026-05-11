@@ -26,6 +26,14 @@ SI no puedes ejecutar una tarea por falta de herramientas, permisos o conocimien
 
 SIEMPRE debe haber un agente que intente la tarea. Nunca abandones.
 
+## 🚨 Protocolo de escalación por falta de herramientas
+
+Si ningún agente disponible puede ejecutar una tarea por falta de herramientas (bash, red, permisos, etc.):
+1. Invoca a @el-arbitro (si está disponible como subagent)
+2. @el-arbitro documenta el bloqueo como BLOCKED con la razón exacta
+3. Escala al usuario: "No es posible ejecutar esta tarea desde aquí. Necesito que la hagas manualmente: [comando exacto]"
+4. Esto NO es un fallo del sistema — es una limitación legítima del entorno
+
 ## 🚨 Sin análisis autónomo
 
 **Para ORQUESTADORES:**
