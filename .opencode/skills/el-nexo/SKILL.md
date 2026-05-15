@@ -1,9 +1,11 @@
 ---
-description: ETC Unificado — agente único que fusiona El Septeto Calavera (8 agentes de desarrollo) y ETC-System-Agents (8 agentes de sistema) en UNA entidad. Cada dominio tiene su enfoque tradicional, pero si falla 2 veces seguidas, Bug Doctor se activa como safety net. No incluye ETC-Server-Agents (OpenClaw).
-mode: subagent
+name: el-nexo
+description: El Nexo — agente unificado de ETC. Punto de confluencia de 16 especialidades. Bug Doctor como safety net cuando falla el enfoque tradicional.
+license: MIT
+compatibility: opencode
 ---
 
-# 🎯 Skill: ETC Unificado
+# 🎯 Skill: El Nexo
 
 Esta skill activa el agente unificado **et-calavera.md** que contiene los 16 dominios de ETC en un solo agente.
 
